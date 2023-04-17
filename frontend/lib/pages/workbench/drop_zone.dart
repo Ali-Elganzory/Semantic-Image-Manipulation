@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:frontend/util/snackbar.dart';
+
+import '/third_party/third_party.dart';
+import '/store/store.dart';
+
+class DropZone extends HookConsumerWidget {
+  const DropZone({super.key});
+
+  static const double _dropzoneInnerPadding = 6;
+  static const double _dropzoneRadius = 5;
+
+  static const Set<String> _supportedMimeTypes = {
+    'image/jpeg',
+    'image/png',
+  };
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isHovering = useState(false);
+    final fileController = useState<DropzoneViewController?>(null);
+
+    void onDrop(event) async {
+      final store = ref.read(editingProvider.notifier);
+      store.setIsLoading(true);
+
+      final mime = await fileController.value!.getFileMIME(event);
+      if (!_supportedMimeTypes.contains(mime)) {
+        if (context.mounted) {
+          context.showSnackBar(
+              'Unsupported file type. Please upload a JPEG or PNG image.');
+        }
+      } else {
+        final url = await fileController.value!.createFileUrl(event);
+        store.setImageUrl(url);
+      }
+
+      isHovering.value = false;
+      store.setIsLoading(false);
+    }
+
+    return Stack(
+      children: [
+        DottedBorder(
+          radius: const Radius.circular(_dropzoneRadius),
+          borderType: BorderType.RRect,
+          dashPattern: const [6, 4],
+          strokeCap: StrokeCap.round,
+          color: Theme.of(context).primaryColor,
+          padding: const EdgeInsets.all(_dropzoneInnerPadding),
+          child: Container(
+            decoration: BoxDecoration(
+              color: isHovering.value
+                  ? Theme.of(context).primaryColor.withOpacity(0.4)
+                  : Colors.transparent,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(_dropzoneRadius),
+              ),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: Center(
+              child: Text(
+                'Drop a photo here',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: isHovering.value
+                          ? Colors.white
+                          : Theme.of(context).primaryColorDark,
+                    ),
+              ),
+            ),
+          ),
+        ),
+        DropzoneView(
+          onCreated: (controller) => fileController.value = controller,
+          onHover: () => isHovering.value = true,
+          onLeave: () => isHovering.value = false,
+          onDrop: onDrop,
+        ),
+      ],
+    );
+  }
+}

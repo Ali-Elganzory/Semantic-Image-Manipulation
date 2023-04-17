@@ -1,0 +1,7 @@
+.vscode
+
+.venv
+**/__pycache__
+
+ml/yolo/detect_yolov8x.pt
+ml/lama/models/best.ckpt
