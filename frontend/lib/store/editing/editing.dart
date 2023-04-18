@@ -12,27 +12,11 @@ class EditingState with _$EditingState {
   const factory EditingState({
     required bool isLoading,
     required String imageUrl,
-    required List<String> objectNames,
-    required List<String> selectedObjectNames,
-    required String objectNameQuery,
   }) = _EditingState;
 
   factory EditingState.initial() => const EditingState(
         isLoading: false,
         imageUrl: Empty.STRING,
-        objectNames: [
-          'cat',
-          'dog',
-          'bird',
-          'fish',
-          'horse',
-          'cow',
-          'sheep',
-          'pig',
-          'elephant',
-        ],
-        selectedObjectNames: [],
-        objectNameQuery: Empty.STRING,
       );
 
   bool get isImageLoaded => imageUrl != Empty.STRING;
@@ -52,28 +36,4 @@ class Editing extends _$Editing {
   void setImageUrl(String url) {
     state = state.copyWith(imageUrl: url);
   }
-
-  void setSelectedObjectNames(List<String> names) {
-    state = state.copyWith(selectedObjectNames: names);
-  }
-
-  void setObjectNameQuery(String query) {
-    state = state.copyWith(objectNameQuery: query);
-  }
-}
-
-@riverpod
-List<String> suggestions(SuggestionsRef ref) {
-  final all = ref.watch(editingProvider).objectNames;
-  final selected = ref.watch(editingProvider).selectedObjectNames;
-  final query = ref.watch(editingProvider).objectNameQuery;
-
-  if (query.isNotEmpty) {
-    final lowercaseQuery = query.toLowerCase();
-    return all
-        .where((e) => !selected.contains(e))
-        .where((e) => e.toLowerCase().contains(lowercaseQuery))
-        .toList(growable: false);
-  }
-  return const [];
 }

@@ -14,4 +14,7 @@ bp = Blueprint('detection', __name__, url_prefix='/detection')
 @bp.get('/labels')
 def labels():
     labels = db_session.query(Label).all()
-    return labels
+    return {
+        'message': '',
+        'data': labels,
+    }

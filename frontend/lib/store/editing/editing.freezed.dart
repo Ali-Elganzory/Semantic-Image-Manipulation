@@ -18,9 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$EditingState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  List<String> get objectNames => throw _privateConstructorUsedError;
-  List<String> get selectedObjectNames => throw _privateConstructorUsedError;
-  String get objectNameQuery => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EditingStateCopyWith<EditingState> get copyWith =>
@@ -33,12 +30,7 @@ abstract class $EditingStateCopyWith<$Res> {
           EditingState value, $Res Function(EditingState) then) =
       _$EditingStateCopyWithImpl<$Res, EditingState>;
   @useResult
-  $Res call(
-      {bool isLoading,
-      String imageUrl,
-      List<String> objectNames,
-      List<String> selectedObjectNames,
-      String objectNameQuery});
+  $Res call({bool isLoading, String imageUrl});
 }
 
 /// @nodoc
@@ -56,9 +48,6 @@ class _$EditingStateCopyWithImpl<$Res, $Val extends EditingState>
   $Res call({
     Object? isLoading = null,
     Object? imageUrl = null,
-    Object? objectNames = null,
-    Object? selectedObjectNames = null,
-    Object? objectNameQuery = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -68,18 +57,6 @@ class _$EditingStateCopyWithImpl<$Res, $Val extends EditingState>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      objectNames: null == objectNames
-          ? _value.objectNames
-          : objectNames // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedObjectNames: null == selectedObjectNames
-          ? _value.selectedObjectNames
-          : selectedObjectNames // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      objectNameQuery: null == objectNameQuery
-          ? _value.objectNameQuery
-          : objectNameQuery // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -93,12 +70,7 @@ abstract class _$$_EditingStateCopyWith<$Res>
       __$$_EditingStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool isLoading,
-      String imageUrl,
-      List<String> objectNames,
-      List<String> selectedObjectNames,
-      String objectNameQuery});
+  $Res call({bool isLoading, String imageUrl});
 }
 
 /// @nodoc
@@ -114,9 +86,6 @@ class __$$_EditingStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? imageUrl = null,
-    Object? objectNames = null,
-    Object? selectedObjectNames = null,
-    Object? objectNameQuery = null,
   }) {
     return _then(_$_EditingState(
       isLoading: null == isLoading
@@ -127,18 +96,6 @@ class __$$_EditingStateCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      objectNames: null == objectNames
-          ? _value._objectNames
-          : objectNames // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedObjectNames: null == selectedObjectNames
-          ? _value._selectedObjectNames
-          : selectedObjectNames // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      objectNameQuery: null == objectNameQuery
-          ? _value.objectNameQuery
-          : objectNameQuery // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -146,43 +103,17 @@ class __$$_EditingStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EditingState extends _EditingState {
-  const _$_EditingState(
-      {required this.isLoading,
-      required this.imageUrl,
-      required final List<String> objectNames,
-      required final List<String> selectedObjectNames,
-      required this.objectNameQuery})
-      : _objectNames = objectNames,
-        _selectedObjectNames = selectedObjectNames,
-        super._();
+  const _$_EditingState({required this.isLoading, required this.imageUrl})
+      : super._();
 
   @override
   final bool isLoading;
   @override
   final String imageUrl;
-  final List<String> _objectNames;
-  @override
-  List<String> get objectNames {
-    if (_objectNames is EqualUnmodifiableListView) return _objectNames;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_objectNames);
-  }
-
-  final List<String> _selectedObjectNames;
-  @override
-  List<String> get selectedObjectNames {
-    if (_selectedObjectNames is EqualUnmodifiableListView)
-      return _selectedObjectNames;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedObjectNames);
-  }
-
-  @override
-  final String objectNameQuery;
 
   @override
   String toString() {
-    return 'EditingState(isLoading: $isLoading, imageUrl: $imageUrl, objectNames: $objectNames, selectedObjectNames: $selectedObjectNames, objectNameQuery: $objectNameQuery)';
+    return 'EditingState(isLoading: $isLoading, imageUrl: $imageUrl)';
   }
 
   @override
@@ -193,23 +124,11 @@ class _$_EditingState extends _EditingState {
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            const DeepCollectionEquality()
-                .equals(other._objectNames, _objectNames) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedObjectNames, _selectedObjectNames) &&
-            (identical(other.objectNameQuery, objectNameQuery) ||
-                other.objectNameQuery == objectNameQuery));
+                other.imageUrl == imageUrl));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isLoading,
-      imageUrl,
-      const DeepCollectionEquality().hash(_objectNames),
-      const DeepCollectionEquality().hash(_selectedObjectNames),
-      objectNameQuery);
+  int get hashCode => Object.hash(runtimeType, isLoading, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -221,22 +140,13 @@ class _$_EditingState extends _EditingState {
 abstract class _EditingState extends EditingState {
   const factory _EditingState(
       {required final bool isLoading,
-      required final String imageUrl,
-      required final List<String> objectNames,
-      required final List<String> selectedObjectNames,
-      required final String objectNameQuery}) = _$_EditingState;
+      required final String imageUrl}) = _$_EditingState;
   const _EditingState._() : super._();
 
   @override
   bool get isLoading;
   @override
   String get imageUrl;
-  @override
-  List<String> get objectNames;
-  @override
-  List<String> get selectedObjectNames;
-  @override
-  String get objectNameQuery;
   @override
   @JsonKey(ignore: true)
   _$$_EditingStateCopyWith<_$_EditingState> get copyWith =>
