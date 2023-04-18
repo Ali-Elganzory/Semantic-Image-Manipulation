@@ -66,11 +66,11 @@ class YOLO:
         self.path = Path(__file__).parent
         self.detection_model = YOLOUltra(
             model=f"{self.path}/detect_{self.model_size}.pt")
-        self.segmentation_model = YOLOUltra(
-            model=f"{self.path}/segment_{self.model_size}.pt")
+        # self.segmentation_model = YOLOUltra(
+        #     model=f"{self.path}/segment_{self.model_size}.pt")
         self.class_names = self.detection_model.names
 
-    @ property
+    @property
     def labels(self):
         return [*self.class_names]
 

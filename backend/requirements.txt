@@ -1,19 +1,21 @@
+Flask == 2.2.3
+
+scikit-image
+scikit-learn
+opencv-python
+albumentations
+tensorflow
+pytorch-lightning == 1.7.7
 ultralytics
+matplotlib
+pandas
 
 pyyaml
 tqdm
 numpy
 easydict
-scikit-image
-scikit-learn
-opencv-python
-tensorflow
 joblib
-matplotlib
-pandas
-albumentations
 hydra-core
-pytorch-lightning==1.7.7
 tabulate
 kornia
 webdataset

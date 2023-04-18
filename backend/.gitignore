@@ -1,7 +1,19 @@
 .vscode
 
 .venv
-**/__pycache__
+.venv_win
+*.pyc
+__pycache__/
 
-ml/yolo/detect_yolov8x.pt
-ml/lama/models/best.ckpt
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/
+
+**/detect_yolov8x.pt
+**/best.ckpt
