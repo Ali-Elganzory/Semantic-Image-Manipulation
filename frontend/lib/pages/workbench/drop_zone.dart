@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/util/snackbar.dart';
 
-import '/third_party/third_party.dart';
+import '/util/util.dart';
 import '/store/store.dart';
+import '/third_party/third_party.dart';
+import '/components/components.dart';
 
 class DropZone extends HookConsumerWidget {
   const DropZone({super.key});
@@ -17,12 +18,14 @@ class DropZone extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // State
     final isHovering = useState(false);
     final fileController = useState<DropzoneViewController?>(null);
+    final isUploadingImage = ref.watch(imagesProvider).isUploadingImage;
 
+    // Actions
     void onDrop(event) async {
-      final store = ref.read(editingProvider.notifier);
-      store.setIsLoading(true);
+      if (isUploadingImage) return;
 
       final mime = await fileController.value!.getFileMIME(event);
       if (!_supportedMimeTypes.contains(mime)) {
@@ -31,12 +34,12 @@ class DropZone extends HookConsumerWidget {
               'Unsupported file type. Please upload a JPEG or PNG image.');
         }
       } else {
-        final url = await fileController.value!.createFileUrl(event);
-        store.setImageUrl(url);
+        final name = await fileController.value!.getFilename(event);
+        final bytes = fileController.value!.getFileData(event);
+        ref.read(imagesProvider.notifier).newImage(name, bytes);
       }
 
       isHovering.value = false;
-      store.setIsLoading(false);
     }
 
     return Stack(
@@ -59,23 +62,39 @@ class DropZone extends HookConsumerWidget {
             ),
             clipBehavior: Clip.antiAlias,
             child: Center(
-              child: Text(
-                'Drop a photo here',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: isHovering.value
-                          ? Colors.white
-                          : Theme.of(context).primaryColorDark,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (isUploadingImage)
+                    AnimatedUpDown(
+                      duration: const Duration(milliseconds: 600),
+                      extraSpace: 24,
+                      child: FaIcon(
+                        FontAwesomeIcons.cloudArrowUp,
+                        color: Theme.of(context).primaryColor,
+                        size: 40,
+                      ),
                     ),
+                  Text(
+                    isUploadingImage ? 'Uploading...' : 'Drop a photo here',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: isHovering.value
+                              ? Colors.white
+                              : Theme.of(context).primaryColorDark,
+                        ),
+                  ),
+                ],
               ),
             ),
           ),
         ),
-        DropzoneView(
-          onCreated: (controller) => fileController.value = controller,
-          onHover: () => isHovering.value = true,
-          onLeave: () => isHovering.value = false,
-          onDrop: onDrop,
-        ),
+        if (!isUploadingImage)
+          DropzoneView(
+            onCreated: (controller) => fileController.value = controller,
+            onHover: () => isHovering.value = true,
+            onLeave: () => isHovering.value = false,
+            onDrop: onDrop,
+          ),
       ],
     );
   }

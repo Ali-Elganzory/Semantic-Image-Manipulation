@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'history.dart';
+import 'images.dart';
 import 'edit_area.dart';
 
 class WorkbenchPage extends StatelessWidget {
@@ -12,12 +12,12 @@ class WorkbenchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
-        children: [
-          const SizedBox(
+        children: const [
+          SizedBox(
             width: _historyWidth,
-            child: History(),
+            child: Images(),
           ),
-          const Expanded(
+          Expanded(
             child: EditArea(),
           ),
         ],

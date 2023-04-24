@@ -13,7 +13,9 @@ abstract class Parser {
 
   /// Maps model type to its factory.
   final factories = <Type, Function(Map<String, dynamic>)>{
-    Label: (json) => Label.fromJson(json),
+    ImageModel: (json) => ImageModel.fromJson(json),
+    LabelModel: (json) => LabelModel.fromJson(json),
+    VoidModel: (json) => VoidModel.fromJson(json),
   };
 
   /// Parses the [Model] contained in the

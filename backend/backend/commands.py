@@ -20,7 +20,7 @@ def update_labels():
     labels = None
     with open(current_app.root_path + '/ml/yolo/labels.json') as f:
         labels = json.load(f)
-        labels = [Label(index=index, name=labels[index]) for index in labels]
+        labels = [Label(id=index, name=labels[index]) for index in labels]
 
     db_session.query(Label).delete()
     db_session.add_all(labels)

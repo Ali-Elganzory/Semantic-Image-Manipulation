@@ -1,17 +1,14 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '/constants/constants.dart';
+import '/third_party/third_party.dart';
 
 part 'label.freezed.dart';
 part 'label.g.dart';
 
 @freezed
-class Label with _$Label {
-  const factory Label({
-    @Default(Empty.INT) int id,
-    required int index,
+class LabelModel with _$LabelModel {
+  const factory LabelModel({
+    required int id,
     required String name,
-  }) = _Label;
+  }) = _LabelModel;
 
-  factory Label.fromJson(Map<String, dynamic> json) => _$LabelFromJson(json);
+  factory LabelModel.fromJson(Map<String, dynamic> json) => _$LabelModelFromJson(json);
 }

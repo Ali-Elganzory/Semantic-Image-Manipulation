@@ -9,4 +9,9 @@ abstract class HttpClient {
     required String path,
     Map<String, dynamic> payload = const {},
   });
+
+  RepositoryResponse<Result> put<Result, Model>({
+    required String path,
+    Map<String, dynamic> payload = const {},
+  });
 }

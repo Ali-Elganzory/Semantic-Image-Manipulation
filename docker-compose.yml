@@ -1,0 +1,30 @@
+services:
+  # Backend service (HTTP server, ML models)
+  backend:
+    build: ./backend
+    container_name: gp_backend
+    volumes:
+      - ./backend/backend:/app/backend
+      - ./backend/instance:/app/instance
+      - ./backend/database.sqlite:/app/database.sqlite
+      - ./backend/pyproject.toml:/app/pyproject.toml
+      - ./backend/entry_point.sh:/app/entry_point.sh
+      - ./backend/test_images:/app/test_images
+    ports:
+      - "8000:80"
+    depends_on:
+      - redis
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: "nvidia"
+              capabilities: [ gpu ]
+              count: 1
+
+  # Redis service (message broker & backend)
+  redis:
+    image: redis:alpine
+    container_name: gp_redis
+    ports:
+      - "6379:6379"

@@ -1,17 +1,22 @@
+
 import '/third_party/third_party.dart';
+import '/constants/constants.dart';
 
 part 'image.freezed.dart';
 part 'image.g.dart';
 
 @freezed
-class Image with _$Image {
-  const factory Image({
-    required String id,
-    required String name,
-    required String url,
-    required String editedUrl,
-    required String thumbnailUrl,
-  }) = _Image;
+class ImageModel with _$ImageModel {
+  const factory ImageModel({
+    @Default(Empty.INT) int id,
+    @Default(Empty.STRING) String name,
+    @Default(Empty.STRING) String url,
+    @Default(Empty.STRING) String inpaintedUrl,
+  }) = _ImageModel;
 
-  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+  const ImageModel._();
+
+  bool get isUploaded => this.id != Empty.INT;
+
+  factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
 }

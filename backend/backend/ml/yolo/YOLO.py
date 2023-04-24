@@ -6,8 +6,6 @@ from typing import Iterable, List, Tuple, Union
 from ultralytics import YOLO as YOLOUltra
 from ultralytics.yolo.engine.results import Results
 
-from shared.math import scaled
-
 
 class ModelSize:
     XLarge = 'yolov8x'
@@ -20,6 +18,7 @@ class BBox:
     x2: int
     y2: int
     confidence: int
+    label_id: int
     label: str
 
     @property
@@ -57,6 +56,7 @@ class BBox:
     def scaled(self, scale: float) -> BBox:
         return BBox(*scaled(self.xyxy, scale),
                     self.confidence,
+                    self.label_id,
                     self.label)
 
 
@@ -74,13 +74,14 @@ class YOLO:
     def labels(self):
         return [*self.class_names]
 
-    def detect(self, images: Union[List[np.ndarray], np.ndarray], classes: str = None) -> Union[List[BBox], BBox]:
+    def detect(self, images: Union[List[np.ndarray], np.ndarray], classes: str = None) -> Union[List[List[BBox]], List[BBox]]:
         if isinstance(images, np.ndarray):
             images = [images]
         results: Iterable[Results] = map(
-            lambda x: x.numpy(), self.detection_model(images))
+            lambda x: x.cpu().numpy(), self.detection_model(images))
         bounding_boxes = [[BBox(*map(lambda x: int(x), result.boxes.xyxy[i]),
                                 result.boxes.conf[i],
+                                int(result.boxes.cls[i]),
                                 self.class_names[int(result.boxes.cls[i])])]
                           for result in results for i in range(len(result.boxes))]
         if classes:
@@ -90,3 +91,15 @@ class YOLO:
 
     def segment(self, image: np.ndarray):
         pass
+
+
+def scaled(coordinates: Tuple[int, int, int, int], scale: float) -> Tuple[int, int, int, int]:
+    coordinates = np.array(coordinates, dtype=np.float32)
+    translation = np.array([(coordinates[0] + coordinates[2]) / 2,
+                            (coordinates[1] + coordinates[3]) / 2,
+                            (coordinates[0] + coordinates[2]) / 2,
+                            (coordinates[1] + coordinates[3]) / 2])
+    coordinates -= translation
+    coordinates *= scale
+    coordinates += translation
+    return tuple(map(lambda x: int(x), coordinates))

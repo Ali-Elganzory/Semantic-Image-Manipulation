@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/util/snackbar.dart';
 
+import '/util/util.dart';
 import '/third_party/third_party.dart';
 
 class EditableText extends HookWidget {
   const EditableText({
     super.key,
     required this.text,
+    this.realtimeText = false,
+    this.tooltip = '',
     this.minChars = 3,
     required this.onChanged,
     this.style = const TextStyle(
@@ -15,6 +17,8 @@ class EditableText extends HookWidget {
   });
 
   final String text;
+  final bool realtimeText;
+  final String tooltip;
   final int minChars;
   final FutureOr<bool> Function(String) onChanged;
   final TextStyle style;
@@ -26,6 +30,13 @@ class EditableText extends HookWidget {
     final currentText = useState(text);
     final isHovering = useState(false);
     final isEditMode = useState(false);
+
+    useEffect(() {
+      if (realtimeText) {
+        prevText.value = currentText.value = text;
+        return null;
+      }
+    }, [text]);
 
     void onSave() async {
       isEditMode.value = false;
@@ -68,11 +79,14 @@ class EditableText extends HookWidget {
               )
             : Row(
                 children: [
-                  Text(
-                    currentText.value,
-                    style: style.copyWith(
-                      fontSize: size,
-                      color: Theme.of(context).primaryColorDark,
+                  Tooltip(
+                    message: isEditMode.value ? '' : tooltip,
+                    child: Text(
+                      currentText.value,
+                      style: style.copyWith(
+                        fontSize: size,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
                     ),
                   ),
                   AnimatedOpacity(

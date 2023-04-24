@@ -5,37 +5,54 @@ from flask_cors import CORS
 
 
 def create_app(test_config=None):
-    # create and configure the app
+    # Create the app
     app = Flask(__name__, instance_relative_config=True)
+
+    # Configuration
     CORS(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'database.sqlite'),
+        UPLOAD_FOLDER=os.path.join(app.instance_path, 'uploads'),
+        CELERY=dict(
+            broker_url="redis://redis",
+            result_backend="redis://redis",
+            task_ignore_result=True,
+        ),
     )
 
     if test_config is None:
-        # load the instance config, if it exists, when not testing
+        # Load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
     else:
-        # load the test config if passed in
+        # Load the test config if passed in
         app.config.from_mapping(test_config)
 
-    # ensure the instance folder exists
+    # Ensure the instance folders exists
     try:
-        os.makedirs(app.instance_path)
+        folders = [
+            app.instance_path,
+            app.config['UPLOAD_FOLDER'],
+        ]
+        for folder in folders:
+            os.makedirs(folder)
     except OSError:
         pass
 
-    # database
+    # Celery
+    from . import celery_app
+    celery_app.init_app(app)
+
+    # Database
     from . import database
     database.init_app(app)
 
-    # commands
+    # Commands
     from . import commands
     commands.init_app(app)
 
-    # views
-    import backend.views.detection as detection
-    app.register_blueprint(detection.bp)
+    # Views
+    from . import views
+    views.init_app(app)
 
     return app

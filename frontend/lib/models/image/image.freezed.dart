@@ -14,40 +14,36 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Image _$ImageFromJson(Map<String, dynamic> json) {
-  return _Image.fromJson(json);
+ImageModel _$ImageModelFromJson(Map<String, dynamic> json) {
+  return _ImageModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Image {
-  String get id => throw _privateConstructorUsedError;
+mixin _$ImageModel {
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  String get editedUrl => throw _privateConstructorUsedError;
-  String get thumbnailUrl => throw _privateConstructorUsedError;
+  String get inpaintedUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ImageCopyWith<Image> get copyWith => throw _privateConstructorUsedError;
+  $ImageModelCopyWith<ImageModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ImageCopyWith<$Res> {
-  factory $ImageCopyWith(Image value, $Res Function(Image) then) =
-      _$ImageCopyWithImpl<$Res, Image>;
+abstract class $ImageModelCopyWith<$Res> {
+  factory $ImageModelCopyWith(
+          ImageModel value, $Res Function(ImageModel) then) =
+      _$ImageModelCopyWithImpl<$Res, ImageModel>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String url,
-      String editedUrl,
-      String thumbnailUrl});
+  $Res call({int id, String name, String url, String inpaintedUrl});
 }
 
 /// @nodoc
-class _$ImageCopyWithImpl<$Res, $Val extends Image>
-    implements $ImageCopyWith<$Res> {
-  _$ImageCopyWithImpl(this._value, this._then);
+class _$ImageModelCopyWithImpl<$Res, $Val extends ImageModel>
+    implements $ImageModelCopyWith<$Res> {
+  _$ImageModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -60,14 +56,13 @@ class _$ImageCopyWithImpl<$Res, $Val extends Image>
     Object? id = null,
     Object? name = null,
     Object? url = null,
-    Object? editedUrl = null,
-    Object? thumbnailUrl = null,
+    Object? inpaintedUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -76,36 +71,31 @@ class _$ImageCopyWithImpl<$Res, $Val extends Image>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      editedUrl: null == editedUrl
-          ? _value.editedUrl
-          : editedUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      thumbnailUrl: null == thumbnailUrl
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      inpaintedUrl: null == inpaintedUrl
+          ? _value.inpaintedUrl
+          : inpaintedUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_ImageCopyWith<$Res> implements $ImageCopyWith<$Res> {
-  factory _$$_ImageCopyWith(_$_Image value, $Res Function(_$_Image) then) =
-      __$$_ImageCopyWithImpl<$Res>;
+abstract class _$$_ImageModelCopyWith<$Res>
+    implements $ImageModelCopyWith<$Res> {
+  factory _$$_ImageModelCopyWith(
+          _$_ImageModel value, $Res Function(_$_ImageModel) then) =
+      __$$_ImageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String url,
-      String editedUrl,
-      String thumbnailUrl});
+  $Res call({int id, String name, String url, String inpaintedUrl});
 }
 
 /// @nodoc
-class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
-    implements _$$_ImageCopyWith<$Res> {
-  __$$_ImageCopyWithImpl(_$_Image _value, $Res Function(_$_Image) _then)
+class __$$_ImageModelCopyWithImpl<$Res>
+    extends _$ImageModelCopyWithImpl<$Res, _$_ImageModel>
+    implements _$$_ImageModelCopyWith<$Res> {
+  __$$_ImageModelCopyWithImpl(
+      _$_ImageModel _value, $Res Function(_$_ImageModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,14 +104,13 @@ class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
     Object? id = null,
     Object? name = null,
     Object? url = null,
-    Object? editedUrl = null,
-    Object? thumbnailUrl = null,
+    Object? inpaintedUrl = null,
   }) {
-    return _then(_$_Image(
+    return _then(_$_ImageModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -130,13 +119,9 @@ class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      editedUrl: null == editedUrl
-          ? _value.editedUrl
-          : editedUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      thumbnailUrl: null == thumbnailUrl
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      inpaintedUrl: null == inpaintedUrl
+          ? _value.inpaintedUrl
+          : inpaintedUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -144,88 +129,86 @@ class __$$_ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res, _$_Image>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Image implements _Image {
-  const _$_Image(
-      {required this.id,
-      required this.name,
-      required this.url,
-      required this.editedUrl,
-      required this.thumbnailUrl});
+class _$_ImageModel extends _ImageModel {
+  const _$_ImageModel(
+      {this.id = Empty.INT,
+      this.name = Empty.STRING,
+      this.url = Empty.STRING,
+      this.inpaintedUrl = Empty.STRING})
+      : super._();
 
-  factory _$_Image.fromJson(Map<String, dynamic> json) =>
-      _$$_ImageFromJson(json);
+  factory _$_ImageModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ImageModelFromJson(json);
 
   @override
-  final String id;
+  @JsonKey()
+  final int id;
   @override
+  @JsonKey()
   final String name;
   @override
+  @JsonKey()
   final String url;
   @override
-  final String editedUrl;
-  @override
-  final String thumbnailUrl;
+  @JsonKey()
+  final String inpaintedUrl;
 
   @override
   String toString() {
-    return 'Image(id: $id, name: $name, url: $url, editedUrl: $editedUrl, thumbnailUrl: $thumbnailUrl)';
+    return 'ImageModel(id: $id, name: $name, url: $url, inpaintedUrl: $inpaintedUrl)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Image &&
+            other is _$_ImageModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url) &&
-            (identical(other.editedUrl, editedUrl) ||
-                other.editedUrl == editedUrl) &&
-            (identical(other.thumbnailUrl, thumbnailUrl) ||
-                other.thumbnailUrl == thumbnailUrl));
+            (identical(other.inpaintedUrl, inpaintedUrl) ||
+                other.inpaintedUrl == inpaintedUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, url, editedUrl, thumbnailUrl);
+  int get hashCode => Object.hash(runtimeType, id, name, url, inpaintedUrl);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ImageCopyWith<_$_Image> get copyWith =>
-      __$$_ImageCopyWithImpl<_$_Image>(this, _$identity);
+  _$$_ImageModelCopyWith<_$_ImageModel> get copyWith =>
+      __$$_ImageModelCopyWithImpl<_$_ImageModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ImageToJson(
+    return _$$_ImageModelToJson(
       this,
     );
   }
 }
 
-abstract class _Image implements Image {
-  const factory _Image(
-      {required final String id,
-      required final String name,
-      required final String url,
-      required final String editedUrl,
-      required final String thumbnailUrl}) = _$_Image;
+abstract class _ImageModel extends ImageModel {
+  const factory _ImageModel(
+      {final int id,
+      final String name,
+      final String url,
+      final String inpaintedUrl}) = _$_ImageModel;
+  const _ImageModel._() : super._();
 
-  factory _Image.fromJson(Map<String, dynamic> json) = _$_Image.fromJson;
+  factory _ImageModel.fromJson(Map<String, dynamic> json) =
+      _$_ImageModel.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override
   String get url;
   @override
-  String get editedUrl;
-  @override
-  String get thumbnailUrl;
+  String get inpaintedUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_ImageCopyWith<_$_Image> get copyWith =>
+  _$$_ImageModelCopyWith<_$_ImageModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

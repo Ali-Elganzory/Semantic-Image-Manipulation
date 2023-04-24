@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '/models/models.dart';
 import '/exceptions/failure.dart';
 import '/third_party/third_party.dart';
@@ -25,10 +27,25 @@ class ApiHttpClient implements HttpClient {
   @override
   RepositoryResponse<Result> post<Result, Model>({
     required String path,
-    Map<String, dynamic> payload = const {},
+    dynamic payload = const {},
+    bool isFile = false,
   }) async {
     return _handleApiResponse<Result, Model>(
       () => _dio.post(
+        url: path,
+        data: payload,
+        isFile: true,
+      ),
+    );
+  }
+
+  @override
+  RepositoryResponse<Result> put<Result, Model>({
+    required String path,
+    Map<String, dynamic> payload = const {},
+  }) async {
+    return _handleApiResponse<Result, Model>(
+      () => _dio.put(
         url: path,
         data: payload,
       ),
@@ -52,6 +69,7 @@ class ApiHttpClient implements HttpClient {
         throw Failure(data['message'] ?? 'Something went wrong');
       }
     } on Failure catch (failure, stackTrace) {
+      debugPrint(failure.message);
       return Left(
         Failure(
           failure.message,
@@ -60,6 +78,7 @@ class ApiHttpClient implements HttpClient {
         ),
       );
     } catch (error, stackTrace) {
+      debugPrint(error.toString());
       return Left(
         Failure(
           'Something went wrong',
