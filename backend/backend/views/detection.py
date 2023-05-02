@@ -4,10 +4,10 @@ from flask import (
 from sqlalchemy import func
 
 from backend.database import db_session
-from backend.models import Detection, Label
+from backend.models import Detection, Label, Task, TaskStatus, TaskType
 from backend.tasks import detect as detection_task
 
-bp = Blueprint('detection', __name__, url_prefix='/detection')
+bp = Blueprint('detections', __name__, url_prefix='/detections')
 
 
 @bp.get('/labels')
@@ -22,39 +22,55 @@ def labels():
 
 @bp.post('/')
 def detect():
-    result = detection_task.delay(
-        request.json['image_id'],
+    image_id = request.json['image_id']
+    task = Task(
+        image_id=image_id,
+        type=TaskType.DETECTION,
+        status=TaskStatus.PENDING,
+        progress=0,
+    ).save()
+
+    detection_task.delay(
+        task.id,
     )
 
     return {
         'message': '',
-        'data': {
-            'task_id': result.id,
-        },
+        'data': task,
     }
 
 
-@bp.get('/detections/image/<int:image_id>')
-def detections_by_image(image_id: int):
+@bp.get('/image/<int:image_id>')
+def image_detections(image_id: int):
     detections = db_session.query(Detection).filter(
         Detection.image_id == image_id,
     ).all()
 
     return {
         'message': '',
-        'data': detections,
+        'data': [
+            {
+                **detection.asdict(),
+                'label': detection.label.name,
+            } for detection in detections
+        ],
     }
 
 
-@bp.get('/detections/task/<string:task_id>')
-def detections_by_task(task_id: str):
+@bp.get('/task/<string:task_id>')
+def task_detections(task_id: str):
     detections = db_session.query(Detection).filter(
         Detection.task_id == task_id,
     ).all()
 
     return {
         'message': '',
-        'data': detections,
+        'data': [
+            {
+                **detection.asdict(),
+                'label': detection.label.name,
+            } for detection in detections
+        ],
     }
 
 

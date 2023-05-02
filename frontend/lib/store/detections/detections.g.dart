@@ -6,11 +6,11 @@ part of 'detections.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$labelSuggestionsHash() => r'fa6e7f4d543d09f590a0c9641937d4ccb32a9e80';
+String _$labelSuggestionsHash() => r'd0bccfda667a9e99f5fe613057081b5d0b47f9d5';
 
 /// See also [labelSuggestions].
 @ProviderFor(labelSuggestions)
-final labelSuggestionsProvider = AutoDisposeProvider<List<LabelModel>>.internal(
+final labelSuggestionsProvider = Provider<List<LabelModel>>.internal(
   labelSuggestions,
   name: r'labelSuggestionsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -20,13 +20,29 @@ final labelSuggestionsProvider = AutoDisposeProvider<List<LabelModel>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef LabelSuggestionsRef = AutoDisposeProviderRef<List<LabelModel>>;
-String _$detectionsHash() => r'd4db91794be6c838ec06e714174433264e0741d3';
+typedef LabelSuggestionsRef = ProviderRef<List<LabelModel>>;
+String _$relativeDetectionsHash() =>
+    r'72b28ad3dcaf589327b430a9b06beeab2f0f5699';
+
+/// See also [relativeDetections].
+@ProviderFor(relativeDetections)
+final relativeDetectionsProvider = Provider<List<DetectionModel>>.internal(
+  relativeDetections,
+  name: r'relativeDetectionsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$relativeDetectionsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RelativeDetectionsRef = ProviderRef<List<DetectionModel>>;
+String _$detectionsHash() => r'64895585c5ea1a7355e3c198f4b54715bc9755b5';
 
 /// See also [Detections].
 @ProviderFor(Detections)
 final detectionsProvider =
-    AutoDisposeNotifierProvider<Detections, DetectionsState>.internal(
+    NotifierProvider<Detections, DetectionsState>.internal(
   Detections.new,
   name: r'detectionsProvider',
   debugGetCreateSourceHash:
@@ -35,5 +51,5 @@ final detectionsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Detections = AutoDisposeNotifier<DetectionsState>;
+typedef _$Detections = Notifier<DetectionsState>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

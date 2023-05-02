@@ -34,8 +34,8 @@ class EditableText extends HookWidget {
     useEffect(() {
       if (realtimeText) {
         prevText.value = currentText.value = text;
-        return null;
       }
+      return null;
     }, [text]);
 
     void onSave() async {

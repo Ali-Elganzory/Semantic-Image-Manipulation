@@ -28,6 +28,10 @@ mixin _$DetectionModel {
   int get y => throw _privateConstructorUsedError;
   int get w => throw _privateConstructorUsedError;
   int get h => throw _privateConstructorUsedError;
+  double get xp => throw _privateConstructorUsedError;
+  double get yp => throw _privateConstructorUsedError;
+  double get wp => throw _privateConstructorUsedError;
+  double get hp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +53,11 @@ abstract class $DetectionModelCopyWith<$Res> {
       int x,
       int y,
       int w,
-      int h});
+      int h,
+      double xp,
+      double yp,
+      double wp,
+      double hp});
 }
 
 /// @nodoc
@@ -73,6 +81,10 @@ class _$DetectionModelCopyWithImpl<$Res, $Val extends DetectionModel>
     Object? y = null,
     Object? w = null,
     Object? h = null,
+    Object? xp = null,
+    Object? yp = null,
+    Object? wp = null,
+    Object? hp = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -107,6 +119,22 @@ class _$DetectionModelCopyWithImpl<$Res, $Val extends DetectionModel>
           ? _value.h
           : h // ignore: cast_nullable_to_non_nullable
               as int,
+      xp: null == xp
+          ? _value.xp
+          : xp // ignore: cast_nullable_to_non_nullable
+              as double,
+      yp: null == yp
+          ? _value.yp
+          : yp // ignore: cast_nullable_to_non_nullable
+              as double,
+      wp: null == wp
+          ? _value.wp
+          : wp // ignore: cast_nullable_to_non_nullable
+              as double,
+      hp: null == hp
+          ? _value.hp
+          : hp // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -127,7 +155,11 @@ abstract class _$$_DetectionModelCopyWith<$Res>
       int x,
       int y,
       int w,
-      int h});
+      int h,
+      double xp,
+      double yp,
+      double wp,
+      double hp});
 }
 
 /// @nodoc
@@ -149,6 +181,10 @@ class __$$_DetectionModelCopyWithImpl<$Res>
     Object? y = null,
     Object? w = null,
     Object? h = null,
+    Object? xp = null,
+    Object? yp = null,
+    Object? wp = null,
+    Object? hp = null,
   }) {
     return _then(_$_DetectionModel(
       id: null == id
@@ -183,6 +219,22 @@ class __$$_DetectionModelCopyWithImpl<$Res>
           ? _value.h
           : h // ignore: cast_nullable_to_non_nullable
               as int,
+      xp: null == xp
+          ? _value.xp
+          : xp // ignore: cast_nullable_to_non_nullable
+              as double,
+      yp: null == yp
+          ? _value.yp
+          : yp // ignore: cast_nullable_to_non_nullable
+              as double,
+      wp: null == wp
+          ? _value.wp
+          : wp // ignore: cast_nullable_to_non_nullable
+              as double,
+      hp: null == hp
+          ? _value.hp
+          : hp // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -198,7 +250,11 @@ class _$_DetectionModel implements _DetectionModel {
       required this.x,
       required this.y,
       required this.w,
-      required this.h});
+      required this.h,
+      this.xp = 0,
+      this.yp = 0,
+      this.wp = 0,
+      this.hp = 0});
 
   factory _$_DetectionModel.fromJson(Map<String, dynamic> json) =>
       _$$_DetectionModelFromJson(json);
@@ -219,10 +275,22 @@ class _$_DetectionModel implements _DetectionModel {
   final int w;
   @override
   final int h;
+  @override
+  @JsonKey()
+  final double xp;
+  @override
+  @JsonKey()
+  final double yp;
+  @override
+  @JsonKey()
+  final double wp;
+  @override
+  @JsonKey()
+  final double hp;
 
   @override
   String toString() {
-    return 'DetectionModel(id: $id, labelId: $labelId, label: $label, confidence: $confidence, x: $x, y: $y, w: $w, h: $h)';
+    return 'DetectionModel(id: $id, labelId: $labelId, label: $label, confidence: $confidence, x: $x, y: $y, w: $w, h: $h, xp: $xp, yp: $yp, wp: $wp, hp: $hp)';
   }
 
   @override
@@ -238,13 +306,17 @@ class _$_DetectionModel implements _DetectionModel {
             (identical(other.x, x) || other.x == x) &&
             (identical(other.y, y) || other.y == y) &&
             (identical(other.w, w) || other.w == w) &&
-            (identical(other.h, h) || other.h == h));
+            (identical(other.h, h) || other.h == h) &&
+            (identical(other.xp, xp) || other.xp == xp) &&
+            (identical(other.yp, yp) || other.yp == yp) &&
+            (identical(other.wp, wp) || other.wp == wp) &&
+            (identical(other.hp, hp) || other.hp == hp));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, labelId, label, confidence, x, y, w, h);
+  int get hashCode => Object.hash(
+      runtimeType, id, labelId, label, confidence, x, y, w, h, xp, yp, wp, hp);
 
   @JsonKey(ignore: true)
   @override
@@ -269,7 +341,11 @@ abstract class _DetectionModel implements DetectionModel {
       required final int x,
       required final int y,
       required final int w,
-      required final int h}) = _$_DetectionModel;
+      required final int h,
+      final double xp,
+      final double yp,
+      final double wp,
+      final double hp}) = _$_DetectionModel;
 
   factory _DetectionModel.fromJson(Map<String, dynamic> json) =
       _$_DetectionModel.fromJson;
@@ -290,6 +366,14 @@ abstract class _DetectionModel implements DetectionModel {
   int get w;
   @override
   int get h;
+  @override
+  double get xp;
+  @override
+  double get yp;
+  @override
+  double get wp;
+  @override
+  double get hp;
   @override
   @JsonKey(ignore: true)
   _$$_DetectionModelCopyWith<_$_DetectionModel> get copyWith =>

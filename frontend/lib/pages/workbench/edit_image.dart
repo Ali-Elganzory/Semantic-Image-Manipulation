@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart' hide EditableText;
 
-import '/models/label/label.dart';
-import '/third_party/third_party.dart';
 import '/store/store.dart';
+import '/models/models.dart';
 import '/components/components.dart';
+import '/third_party/third_party.dart';
+
+import 'canvas.dart';
 
 class EditImage extends StatefulHookConsumerWidget {
   const EditImage({super.key});
@@ -30,13 +32,16 @@ class _EditImageState extends ConsumerState<EditImage> {
     final areLabelsLoading = ref.watch(detectionsProvider).isLoadingLabels;
     final labelSuggestions = ref.watch(labelSuggestionsProvider);
     final image = ref.watch(imagesProvider).selected;
+    final tasks = ref.watch(tasksProvider).tasks;
+    final areTasksLoading = ref.watch(tasksProvider).isLoading;
+    final isDetectionRunning = ref.watch(isDetectionRunningProvider);
 
     // Actions
     void onLabelsChanged(List<LabelModel> labels) {
       labelsNotifier.selectLabels(labels);
     }
 
-    void onSearchChanged(String query) async {
+    void onSearchChanged(String query) {
       labelsNotifier.searchLabels(query);
     }
 
@@ -44,41 +49,18 @@ class _EditImageState extends ConsumerState<EditImage> {
       ref.read(imagesProvider.notifier).updateName(name);
     }
 
+    void onDetectPressed() {
+      ref.read(tasksProvider.notifier).detect(image.id);
+    }
+
     return Stack(
       children: [
-        Positioned(
+        const Positioned(
           top: 60,
           bottom: _inputHeight + 10,
           left: 0,
           right: 0,
-          child: CachedNetworkImage(
-            imageUrl: image.url,
-            fit: BoxFit.contain,
-            imageBuilder: (context, imageProvider) => FittedBox(
-              fit: BoxFit.contain,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: Image(
-                  image: imageProvider,
-                ),
-              ),
-            ),
-            placeholder: (context, url) => Skeleton(
-              isLoading: true,
-              child: Container(
-                height: double.maxFinite,
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                clipBehavior: Clip.antiAlias,
-              ),
-            ),
-          ),
+          child: Canvas(),
         ),
         Positioned(
           top: 0,
@@ -95,6 +77,33 @@ class _EditImageState extends ConsumerState<EditImage> {
                   return true;
                 },
               ),
+              const Expanded(
+                child: SizedBox(),
+              ),
+              if (!areTasksLoading)
+                for (final task in tasks)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: TaskChip(
+                      task: task,
+                    ),
+                  ),
+              if (areTasksLoading)
+                for (final _ in List.generate(2, (i) => i))
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Skeleton(
+                      isLoading: true,
+                      child: TaskChip(
+                        task: TaskModel(
+                          id: -1,
+                          imageId: -1,
+                          status: TaskStatus.pending,
+                          type: TaskType.detection,
+                        ),
+                      ),
+                    ),
+                  ),
             ],
           ),
         ),
@@ -114,7 +123,8 @@ class _EditImageState extends ConsumerState<EditImage> {
                 filled: true,
                 fillColor: Theme.of(context).colorScheme.surface,
                 suffixIcon: Tooltip(
-                  message: 'Detect',
+                  message:
+                      isDetectionRunning ? 'Detection running..' : 'Detect',
                   child: Container(
                     margin: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
@@ -122,10 +132,9 @@ class _EditImageState extends ConsumerState<EditImage> {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: MaterialButton(
-                      onPressed: () {
-                        print('TODO: Detect button');
-                      },
+                      onPressed: isDetectionRunning ? null : onDetectPressed,
                       padding: const EdgeInsets.all(0),
+                      disabledColor: Colors.grey,
                       child: FaIcon(
                         FontAwesomeIcons.vectorSquare,
                         color: Theme.of(context).primaryColor,

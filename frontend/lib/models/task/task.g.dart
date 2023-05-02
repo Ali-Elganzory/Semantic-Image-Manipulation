@@ -8,6 +8,7 @@ part of 'task.dart';
 
 _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
       id: json['id'] as int,
+      imageId: json['image_id'] as int,
       type: $enumDecode(_$TaskTypeEnumMap, json['type']),
       status: $enumDecode(_$TaskStatusEnumMap, json['status']),
     );
@@ -15,13 +16,14 @@ _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
 Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'image_id': instance.imageId,
       'type': _$TaskTypeEnumMap[instance.type]!,
       'status': _$TaskStatusEnumMap[instance.status]!,
     };
 
 const _$TaskTypeEnumMap = {
   TaskType.detection: 'detection',
-  TaskType.classification: 'classification',
+  TaskType.inpainting: 'inpainting',
 };
 
 const _$TaskStatusEnumMap = {

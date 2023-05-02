@@ -49,4 +49,31 @@ class ApiRepository {
       isFile: true,
     );
   }
+
+  RepositoryResponse<List<TaskModel>> getTasks(int imageId) {
+    return _apiHttpClient.get<List<TaskModel>, TaskModel>(
+      path: '${ApiUrl.getTasks}/$imageId',
+    );
+  }
+
+  RepositoryResponse<TaskModel> getTask(int taskId) {
+    return _apiHttpClient.get<TaskModel, TaskModel>(
+      path: '${ApiUrl.getTask}/$taskId',
+    );
+  }
+
+  RepositoryResponse<List<DetectionModel>> getDetectionsByTask(int taskId) {
+    return _apiHttpClient.get<List<DetectionModel>, DetectionModel>(
+      path: '${ApiUrl.getDetectionsByTask}/$taskId',
+    );
+  }
+
+  RepositoryResponse<TaskModel> detect(int imageId) {
+    return _apiHttpClient.post<TaskModel, TaskModel>(
+      path: ApiUrl.detect,
+      payload: {
+        'image_id': imageId,
+      },
+    );
+  }
 }

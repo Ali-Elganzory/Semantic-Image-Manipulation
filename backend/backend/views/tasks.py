@@ -26,10 +26,8 @@ def get_task(task_id: int):
 
 
 @bp.get('/image/<int:image_id>')
-def get_tasks_by_image(image_id: int):
-    tasks = db_session.query(Task).filter(
-        Task.image_id == image_id,
-    ).all()
+def get_image_tasks(image_id: int):
+    tasks = Task.of_image(image_id)
 
     return {
         'message': '',

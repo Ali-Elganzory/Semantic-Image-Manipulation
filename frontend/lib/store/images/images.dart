@@ -1,5 +1,7 @@
-import 'package:frontend/util/util.dart';
+import 'dart:developer';
 
+import '/util/util.dart';
+import '/store/store.dart';
 import '/models/models.dart';
 import '/repository/repository.dart';
 import '/constants/constants.dart';
@@ -23,8 +25,7 @@ class ImagesState with _$ImagesState {
   bool get isImageSelected => selected.id != Empty.INT;
 
   factory ImagesState.initial() => const ImagesState(
-        images: [
-        ],
+        images: [],
         selected: ImageModel(),
         searchTerm: Empty.STRING,
         isLoadingImages: false,
@@ -32,7 +33,7 @@ class ImagesState with _$ImagesState {
       );
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Images extends _$Images {
   final repository = ApiRepository();
 
@@ -62,6 +63,7 @@ class Images extends _$Images {
 
   void select(ImageModel image) {
     state = state.copyWith(selected: image);
+    ref.read(tasksProvider.notifier).getTasks(image.id);
   }
 
   void deselect() {
@@ -74,7 +76,7 @@ class Images extends _$Images {
 
   Future<void> newImage(String name, FutureOr<List<int>> bytes) async {
     state = state.copyWith(isUploadingImage: true);
-    
+
     final response = await repository.postImage(
       name: name,
       bytes: await bytes,
@@ -156,7 +158,7 @@ class Images extends _$Images {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 List<ImageModel> imageSearchResults(ImageSearchResultsRef ref) {
   final all = ref.watch(imagesProvider).images;
   final searchTerm = ref.watch(imagesProvider).searchTerm.toLowerCase();

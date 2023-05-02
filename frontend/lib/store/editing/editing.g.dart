@@ -6,12 +6,11 @@ part of 'editing.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$editingHash() => r'771cf6b9c2f08fdca847e3abd7fa03724f763482';
+String _$editingHash() => r'efe01389a24e02a7c6cd65c0d361f6019520186a';
 
 /// See also [Editing].
 @ProviderFor(Editing)
-final editingProvider =
-    AutoDisposeNotifierProvider<Editing, EditingState>.internal(
+final editingProvider = NotifierProvider<Editing, EditingState>.internal(
   Editing.new,
   name: r'editingProvider',
   debugGetCreateSourceHash:
@@ -20,5 +19,5 @@ final editingProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Editing = AutoDisposeNotifier<EditingState>;
+typedef _$Editing = Notifier<EditingState>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -79,6 +79,7 @@ class ApiHttpClient implements HttpClient {
       );
     } catch (error, stackTrace) {
       debugPrint(error.toString());
+      debugPrint(stackTrace.toString());
       return Left(
         Failure(
           'Something went wrong',

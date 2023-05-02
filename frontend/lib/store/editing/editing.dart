@@ -22,7 +22,7 @@ class EditingState with _$EditingState {
   bool get isImageLoaded => imageUrl != Empty.STRING;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Editing extends _$Editing {
   @override
   EditingState build() {

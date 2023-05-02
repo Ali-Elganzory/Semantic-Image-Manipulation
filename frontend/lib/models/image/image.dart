@@ -11,6 +11,8 @@ class ImageModel with _$ImageModel {
     @Default(Empty.INT) int id,
     @Default(Empty.STRING) String name,
     @Default(Empty.STRING) String url,
+    @Default(Empty.INT) int width,
+    @Default(Empty.INT) int height,
     @Default(Empty.STRING) String inpaintedUrl,
   }) = _ImageModel;
 

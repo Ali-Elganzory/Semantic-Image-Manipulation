@@ -1,6 +1,7 @@
 import os
 import uuid
 
+from cv2 import imread
 from flask import (
     Blueprint, Flask, current_app, request, send_from_directory, url_for
 )
@@ -13,13 +14,22 @@ bp = Blueprint('images', __name__, url_prefix='/images')
 
 @bp.post('/')
 def upload_image():
+    # Save image to storage
     extension = request.files['file'].filename.split('.')[-1]
     path = os.path.join(current_app.config['UPLOAD_FOLDER'], str(
         uuid.uuid4()) + '.' + extension)
     request.files['file'].save(path)
 
+    # Extract image info
+    height, width, _ = imread(path).shape
+
     # Save image to database
-    image = Image(name='New image', path=path).save()
+    image = Image(
+        name='New image',
+        path=path,
+        width=width,
+        height=height,
+    ).save()
 
     return {
         'message': '',
@@ -31,6 +41,8 @@ def upload_image():
                 image_filename=image.path.split('/')[-1],
                 _external=True,
             ),
+            'width': image.width,
+            'height': image.height,
         },
     }
 
@@ -57,6 +69,8 @@ def get_images():
                     image_filename=image.path.split('/')[-1],
                     _external=True,
                 ),
+                'width': image.width,
+                'height': image.height,
                 'inpainted_url': '' if image.inpainted_path is None else url_for(
                     'images.download_image',
                     image_filename=image.inpainted_path.split('/')[-1],

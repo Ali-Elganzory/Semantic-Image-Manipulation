@@ -276,18 +276,18 @@ class ChipsInputState<T> extends State<ChipsInput<T>> with TextInputClient {
   }
 
   @override
-  // TODO: implement currentAutofillScope
+  // implement currentAutofillScope
   AutofillScope? get currentAutofillScope => throw UnimplementedError();
 
   @override
   void performPrivateCommand(String action, Map<String, dynamic> data) {
-    // TODO: implement performPrivateCommand
-    print('performPrivateCommand: $action, $data');
+    // implement performPrivateCommand
+    // print('performPrivateCommand: $action, $data');
   }
 
   @override
   void showAutocorrectionPromptRect(int start, int end) {
-    // TODO: implement showAutocorrectionPromptRect
+    // implement showAutocorrectionPromptRect
   }
 }
 

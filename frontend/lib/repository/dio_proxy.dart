@@ -7,6 +7,8 @@ import '/exceptions/exceptions.dart';
 import '/repository/api_url.dart';
 
 class DioProxy {
+  final debug = false;
+
   final Dio dio = Dio(
     BaseOptions(
       receiveDataWhenStatusError: true,
@@ -30,10 +32,12 @@ class DioProxy {
       url = url.replaceAll('??', '?');
     }
 
-    debugPrint('URL => ${dio.options.baseUrl + url}');
-    debugPrint('Header => ${dio.options.headers.toString()}');
-    debugPrint('Body => $data');
-    debugPrint('Query => $query');
+    if (debug) {
+      debugPrint('URL => ${dio.options.baseUrl + url}');
+      debugPrint('Header => ${dio.options.headers.toString()}');
+      debugPrint('Body => $data');
+      debugPrint('Query => $query');
+    }
 
     return await request(
       () async => await dio.get(
@@ -65,10 +69,12 @@ class DioProxy {
       url = url.replaceAll('??', '?');
     }
 
-    debugPrint('URL => ${dio.options.baseUrl + url}');
-    debugPrint('Header => ${dio.options.headers.toString()}');
-    debugPrint('Body => $data');
-    debugPrint('Query => $query');
+    if (debug) {
+      debugPrint('URL => ${dio.options.baseUrl + url}');
+      debugPrint('Header => ${dio.options.headers.toString()}');
+      debugPrint('Body => $data');
+      debugPrint('Query => $query');
+    }
 
     return await request(
       () async => await dio.post(
@@ -103,10 +109,12 @@ class DioProxy {
       url = url.replaceAll('??', '?');
     }
 
-    debugPrint('URL => ${dio.options.baseUrl + url}');
-    debugPrint('Header => ${dio.options.headers.toString()}');
-    debugPrint('Body => $data');
-    debugPrint('Query => $query');
+    if (debug) {
+      debugPrint('URL => ${dio.options.baseUrl + url}');
+      debugPrint('Header => ${dio.options.headers.toString()}');
+      debugPrint('Body => $data');
+      debugPrint('Query => $query');
+    }
 
     return await request(
       () async => await dio.put(
@@ -131,7 +139,9 @@ extension on DioProxy {
   Future request(Future<Response> Function() request) async {
     try {
       final r = await request.call();
-      debugPrint("Response => ${r.data}");
+      if (debug) {
+        debugPrint("Response => ${r.data}");
+      }
       return r;
     } on DioError catch (e) {
       debugPrint("Error Message => ${e.message}");

@@ -21,6 +21,7 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TaskModel {
   int get id => throw _privateConstructorUsedError;
+  int get imageId => throw _privateConstructorUsedError;
   TaskType get type => throw _privateConstructorUsedError;
   TaskStatus get status => throw _privateConstructorUsedError;
 
@@ -35,7 +36,7 @@ abstract class $TaskModelCopyWith<$Res> {
   factory $TaskModelCopyWith(TaskModel value, $Res Function(TaskModel) then) =
       _$TaskModelCopyWithImpl<$Res, TaskModel>;
   @useResult
-  $Res call({int id, TaskType type, TaskStatus status});
+  $Res call({int id, int imageId, TaskType type, TaskStatus status});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
   @override
   $Res call({
     Object? id = null,
+    Object? imageId = null,
     Object? type = null,
     Object? status = null,
   }) {
@@ -59,6 +61,10 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      imageId: null == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as int,
       type: null == type
           ? _value.type
@@ -79,7 +85,7 @@ abstract class _$$_TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
       __$$_TaskModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, TaskType type, TaskStatus status});
+  $Res call({int id, int imageId, TaskType type, TaskStatus status});
 }
 
 /// @nodoc
@@ -94,6 +100,7 @@ class __$$_TaskModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? imageId = null,
     Object? type = null,
     Object? status = null,
   }) {
@@ -101,6 +108,10 @@ class __$$_TaskModelCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      imageId: null == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as int,
       type: null == type
           ? _value.type
@@ -118,7 +129,10 @@ class __$$_TaskModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TaskModel implements _TaskModel {
   const _$_TaskModel(
-      {required this.id, required this.type, required this.status});
+      {required this.id,
+      required this.imageId,
+      required this.type,
+      required this.status});
 
   factory _$_TaskModel.fromJson(Map<String, dynamic> json) =>
       _$$_TaskModelFromJson(json);
@@ -126,13 +140,15 @@ class _$_TaskModel implements _TaskModel {
   @override
   final int id;
   @override
+  final int imageId;
+  @override
   final TaskType type;
   @override
   final TaskStatus status;
 
   @override
   String toString() {
-    return 'TaskModel(id: $id, type: $type, status: $status)';
+    return 'TaskModel(id: $id, imageId: $imageId, type: $type, status: $status)';
   }
 
   @override
@@ -141,13 +157,14 @@ class _$_TaskModel implements _TaskModel {
         (other.runtimeType == runtimeType &&
             other is _$_TaskModel &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, type, status);
+  int get hashCode => Object.hash(runtimeType, id, imageId, type, status);
 
   @JsonKey(ignore: true)
   @override
@@ -166,6 +183,7 @@ class _$_TaskModel implements _TaskModel {
 abstract class _TaskModel implements TaskModel {
   const factory _TaskModel(
       {required final int id,
+      required final int imageId,
       required final TaskType type,
       required final TaskStatus status}) = _$_TaskModel;
 
@@ -174,6 +192,8 @@ abstract class _TaskModel implements TaskModel {
 
   @override
   int get id;
+  @override
+  int get imageId;
   @override
   TaskType get type;
   @override

@@ -23,6 +23,8 @@ mixin _$ImageModel {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
+  int get width => throw _privateConstructorUsedError;
+  int get height => throw _privateConstructorUsedError;
   String get inpaintedUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +39,13 @@ abstract class $ImageModelCopyWith<$Res> {
           ImageModel value, $Res Function(ImageModel) then) =
       _$ImageModelCopyWithImpl<$Res, ImageModel>;
   @useResult
-  $Res call({int id, String name, String url, String inpaintedUrl});
+  $Res call(
+      {int id,
+      String name,
+      String url,
+      int width,
+      int height,
+      String inpaintedUrl});
 }
 
 /// @nodoc
@@ -56,6 +64,8 @@ class _$ImageModelCopyWithImpl<$Res, $Val extends ImageModel>
     Object? id = null,
     Object? name = null,
     Object? url = null,
+    Object? width = null,
+    Object? height = null,
     Object? inpaintedUrl = null,
   }) {
     return _then(_value.copyWith(
@@ -71,6 +81,14 @@ class _$ImageModelCopyWithImpl<$Res, $Val extends ImageModel>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
+      width: null == width
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: null == height
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
       inpaintedUrl: null == inpaintedUrl
           ? _value.inpaintedUrl
           : inpaintedUrl // ignore: cast_nullable_to_non_nullable
@@ -87,7 +105,13 @@ abstract class _$$_ImageModelCopyWith<$Res>
       __$$_ImageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String url, String inpaintedUrl});
+  $Res call(
+      {int id,
+      String name,
+      String url,
+      int width,
+      int height,
+      String inpaintedUrl});
 }
 
 /// @nodoc
@@ -104,6 +128,8 @@ class __$$_ImageModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? url = null,
+    Object? width = null,
+    Object? height = null,
     Object? inpaintedUrl = null,
   }) {
     return _then(_$_ImageModel(
@@ -119,6 +145,14 @@ class __$$_ImageModelCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
+      width: null == width
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: null == height
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
       inpaintedUrl: null == inpaintedUrl
           ? _value.inpaintedUrl
           : inpaintedUrl // ignore: cast_nullable_to_non_nullable
@@ -134,6 +168,8 @@ class _$_ImageModel extends _ImageModel {
       {this.id = Empty.INT,
       this.name = Empty.STRING,
       this.url = Empty.STRING,
+      this.width = Empty.INT,
+      this.height = Empty.INT,
       this.inpaintedUrl = Empty.STRING})
       : super._();
 
@@ -151,11 +187,17 @@ class _$_ImageModel extends _ImageModel {
   final String url;
   @override
   @JsonKey()
+  final int width;
+  @override
+  @JsonKey()
+  final int height;
+  @override
+  @JsonKey()
   final String inpaintedUrl;
 
   @override
   String toString() {
-    return 'ImageModel(id: $id, name: $name, url: $url, inpaintedUrl: $inpaintedUrl)';
+    return 'ImageModel(id: $id, name: $name, url: $url, width: $width, height: $height, inpaintedUrl: $inpaintedUrl)';
   }
 
   @override
@@ -166,13 +208,16 @@ class _$_ImageModel extends _ImageModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url) &&
+            (identical(other.width, width) || other.width == width) &&
+            (identical(other.height, height) || other.height == height) &&
             (identical(other.inpaintedUrl, inpaintedUrl) ||
                 other.inpaintedUrl == inpaintedUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, url, inpaintedUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, url, width, height, inpaintedUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -193,6 +238,8 @@ abstract class _ImageModel extends ImageModel {
       {final int id,
       final String name,
       final String url,
+      final int width,
+      final int height,
       final String inpaintedUrl}) = _$_ImageModel;
   const _ImageModel._() : super._();
 
@@ -205,6 +252,10 @@ abstract class _ImageModel extends ImageModel {
   String get name;
   @override
   String get url;
+  @override
+  int get width;
+  @override
+  int get height;
   @override
   String get inpaintedUrl;
   @override

@@ -21,9 +21,9 @@ mixin _$DetectionsState {
   String get labelsSearchTerm => throw _privateConstructorUsedError;
   bool get isLoadingLabels => throw _privateConstructorUsedError;
   List<DetectionModel> get detections => throw _privateConstructorUsedError;
-  List<DetectionModel> get selectedDetectionss =>
+  Set<DetectionModel> get selectedDetections =>
       throw _privateConstructorUsedError;
-  bool get isLoadingDetectionss => throw _privateConstructorUsedError;
+  bool get isLoadingDetections => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DetectionsStateCopyWith<DetectionsState> get copyWith =>
@@ -42,8 +42,8 @@ abstract class $DetectionsStateCopyWith<$Res> {
       String labelsSearchTerm,
       bool isLoadingLabels,
       List<DetectionModel> detections,
-      List<DetectionModel> selectedDetectionss,
-      bool isLoadingDetectionss});
+      Set<DetectionModel> selectedDetections,
+      bool isLoadingDetections});
 }
 
 /// @nodoc
@@ -64,8 +64,8 @@ class _$DetectionsStateCopyWithImpl<$Res, $Val extends DetectionsState>
     Object? labelsSearchTerm = null,
     Object? isLoadingLabels = null,
     Object? detections = null,
-    Object? selectedDetectionss = null,
-    Object? isLoadingDetectionss = null,
+    Object? selectedDetections = null,
+    Object? isLoadingDetections = null,
   }) {
     return _then(_value.copyWith(
       labels: null == labels
@@ -88,13 +88,13 @@ class _$DetectionsStateCopyWithImpl<$Res, $Val extends DetectionsState>
           ? _value.detections
           : detections // ignore: cast_nullable_to_non_nullable
               as List<DetectionModel>,
-      selectedDetectionss: null == selectedDetectionss
-          ? _value.selectedDetectionss
-          : selectedDetectionss // ignore: cast_nullable_to_non_nullable
-              as List<DetectionModel>,
-      isLoadingDetectionss: null == isLoadingDetectionss
-          ? _value.isLoadingDetectionss
-          : isLoadingDetectionss // ignore: cast_nullable_to_non_nullable
+      selectedDetections: null == selectedDetections
+          ? _value.selectedDetections
+          : selectedDetections // ignore: cast_nullable_to_non_nullable
+              as Set<DetectionModel>,
+      isLoadingDetections: null == isLoadingDetections
+          ? _value.isLoadingDetections
+          : isLoadingDetections // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -114,8 +114,8 @@ abstract class _$$_DetectionsStateCopyWith<$Res>
       String labelsSearchTerm,
       bool isLoadingLabels,
       List<DetectionModel> detections,
-      List<DetectionModel> selectedDetectionss,
-      bool isLoadingDetectionss});
+      Set<DetectionModel> selectedDetections,
+      bool isLoadingDetections});
 }
 
 /// @nodoc
@@ -134,8 +134,8 @@ class __$$_DetectionsStateCopyWithImpl<$Res>
     Object? labelsSearchTerm = null,
     Object? isLoadingLabels = null,
     Object? detections = null,
-    Object? selectedDetectionss = null,
-    Object? isLoadingDetectionss = null,
+    Object? selectedDetections = null,
+    Object? isLoadingDetections = null,
   }) {
     return _then(_$_DetectionsState(
       labels: null == labels
@@ -158,13 +158,13 @@ class __$$_DetectionsStateCopyWithImpl<$Res>
           ? _value._detections
           : detections // ignore: cast_nullable_to_non_nullable
               as List<DetectionModel>,
-      selectedDetectionss: null == selectedDetectionss
-          ? _value._selectedDetectionss
-          : selectedDetectionss // ignore: cast_nullable_to_non_nullable
-              as List<DetectionModel>,
-      isLoadingDetectionss: null == isLoadingDetectionss
-          ? _value.isLoadingDetectionss
-          : isLoadingDetectionss // ignore: cast_nullable_to_non_nullable
+      selectedDetections: null == selectedDetections
+          ? _value._selectedDetections
+          : selectedDetections // ignore: cast_nullable_to_non_nullable
+              as Set<DetectionModel>,
+      isLoadingDetections: null == isLoadingDetections
+          ? _value.isLoadingDetections
+          : isLoadingDetections // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -179,12 +179,12 @@ class _$_DetectionsState implements _DetectionsState {
       required this.labelsSearchTerm,
       required this.isLoadingLabels,
       required final List<DetectionModel> detections,
-      required final List<DetectionModel> selectedDetectionss,
-      required this.isLoadingDetectionss})
+      required final Set<DetectionModel> selectedDetections,
+      required this.isLoadingDetections})
       : _labels = labels,
         _selectedLabels = selectedLabels,
         _detections = detections,
-        _selectedDetectionss = selectedDetectionss;
+        _selectedDetections = selectedDetections;
 
   final List<LabelModel> _labels;
   @override
@@ -214,21 +214,21 @@ class _$_DetectionsState implements _DetectionsState {
     return EqualUnmodifiableListView(_detections);
   }
 
-  final List<DetectionModel> _selectedDetectionss;
+  final Set<DetectionModel> _selectedDetections;
   @override
-  List<DetectionModel> get selectedDetectionss {
-    if (_selectedDetectionss is EqualUnmodifiableListView)
-      return _selectedDetectionss;
+  Set<DetectionModel> get selectedDetections {
+    if (_selectedDetections is EqualUnmodifiableSetView)
+      return _selectedDetections;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedDetectionss);
+    return EqualUnmodifiableSetView(_selectedDetections);
   }
 
   @override
-  final bool isLoadingDetectionss;
+  final bool isLoadingDetections;
 
   @override
   String toString() {
-    return 'DetectionsState(labels: $labels, selectedLabels: $selectedLabels, labelsSearchTerm: $labelsSearchTerm, isLoadingLabels: $isLoadingLabels, detections: $detections, selectedDetectionss: $selectedDetectionss, isLoadingDetectionss: $isLoadingDetectionss)';
+    return 'DetectionsState(labels: $labels, selectedLabels: $selectedLabels, labelsSearchTerm: $labelsSearchTerm, isLoadingLabels: $isLoadingLabels, detections: $detections, selectedDetections: $selectedDetections, isLoadingDetections: $isLoadingDetections)';
   }
 
   @override
@@ -246,9 +246,9 @@ class _$_DetectionsState implements _DetectionsState {
             const DeepCollectionEquality()
                 .equals(other._detections, _detections) &&
             const DeepCollectionEquality()
-                .equals(other._selectedDetectionss, _selectedDetectionss) &&
-            (identical(other.isLoadingDetectionss, isLoadingDetectionss) ||
-                other.isLoadingDetectionss == isLoadingDetectionss));
+                .equals(other._selectedDetections, _selectedDetections) &&
+            (identical(other.isLoadingDetections, isLoadingDetections) ||
+                other.isLoadingDetections == isLoadingDetections));
   }
 
   @override
@@ -259,8 +259,8 @@ class _$_DetectionsState implements _DetectionsState {
       labelsSearchTerm,
       isLoadingLabels,
       const DeepCollectionEquality().hash(_detections),
-      const DeepCollectionEquality().hash(_selectedDetectionss),
-      isLoadingDetectionss);
+      const DeepCollectionEquality().hash(_selectedDetections),
+      isLoadingDetections);
 
   @JsonKey(ignore: true)
   @override
@@ -276,8 +276,8 @@ abstract class _DetectionsState implements DetectionsState {
       required final String labelsSearchTerm,
       required final bool isLoadingLabels,
       required final List<DetectionModel> detections,
-      required final List<DetectionModel> selectedDetectionss,
-      required final bool isLoadingDetectionss}) = _$_DetectionsState;
+      required final Set<DetectionModel> selectedDetections,
+      required final bool isLoadingDetections}) = _$_DetectionsState;
 
   @override
   List<LabelModel> get labels;
@@ -290,9 +290,9 @@ abstract class _DetectionsState implements DetectionsState {
   @override
   List<DetectionModel> get detections;
   @override
-  List<DetectionModel> get selectedDetectionss;
+  Set<DetectionModel> get selectedDetections;
   @override
-  bool get isLoadingDetectionss;
+  bool get isLoadingDetections;
   @override
   @JsonKey(ignore: true)
   _$$_DetectionsStateCopyWith<_$_DetectionsState> get copyWith =>

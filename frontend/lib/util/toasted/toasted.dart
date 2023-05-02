@@ -6,13 +6,13 @@ import '/third_party/third_party.dart';
 
 part 'toasted.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Toasts extends _$Toasts {
   final duration = const Duration(seconds: 3);
 
   @override
-  _ToastedState build() {
-    return _ToastedState.initial();
+  ToastedState build() {
+    return ToastedState.initial();
   }
 
   void show(String message, ToastType type) {
@@ -20,7 +20,7 @@ class Toasts extends _$Toasts {
     state = state.copyWith(
       toasts: state.toasts
         ..add(
-          _Toast(
+          Toast(
             message: message,
             type: type,
           ),
@@ -56,13 +56,13 @@ class Toasted extends ConsumerWidget {
   final double padding;
   final double width;
 
-  _Position positionFromAlignment(
+  Position positionFromAlignment(
     Alignment alignment,
   ) {
     final x = alignment.x;
     final y = alignment.y;
 
-    return _Position(
+    return Position(
       top: y < 0 ? padding : null,
       bottom: y > 0 ? padding : null,
       left: x < 0 ? padding : null,
@@ -146,19 +146,19 @@ class Toasted extends ConsumerWidget {
   }
 }
 
-class _ToastedState {
-  final Queue<_Toast> toasts;
+class ToastedState {
+  final Queue<Toast> toasts;
 
-  _ToastedState({
+  ToastedState({
     required this.toasts,
   });
 
-  _ToastedState.initial() : toasts = Queue<_Toast>();
+  ToastedState.initial() : toasts = Queue<Toast>();
 
-  _ToastedState copyWith({
-    Queue<_Toast>? toasts,
+  ToastedState copyWith({
+    Queue<Toast>? toasts,
   }) {
-    return _ToastedState(
+    return ToastedState(
       toasts: toasts ?? this.toasts,
     );
   }
@@ -166,7 +166,7 @@ class _ToastedState {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is _ToastedState &&
+      other is ToastedState &&
           runtimeType == other.runtimeType &&
           toasts.equals(other.toasts);
 
@@ -174,8 +174,8 @@ class _ToastedState {
   int get hashCode => toasts.hashCode;
 }
 
-class _Toast {
-  const _Toast({
+class Toast {
+  const Toast({
     required this.message,
     required this.type,
   });
@@ -184,8 +184,8 @@ class _Toast {
   final ToastType type;
 }
 
-class _Position {
-  const _Position({
+class Position {
+  const Position({
     this.top,
     this.left,
     this.right,

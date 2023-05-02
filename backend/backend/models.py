@@ -1,16 +1,18 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
+from datetime import datetime
 from enum import Enum
-from typing import Self, Union
+from typing import List, Self, Union
 
 from sqlalchemy import (
-    Column, Double, ForeignKey, Integer, String, Enum as DBEnum
+    Column, Double, ForeignKey, Integer, String, Enum as DBEnum, func, DateTime
 )
+from sqlalchemy.orm import relationship
 
 from backend.database import db_session, Base
 
 
 ############################################
-# CRUD Mixin (helper methods)
+# Mixins (Helper Classes)
 ############################################
 
 from backend.database import db_session
@@ -33,13 +35,23 @@ class CrudMixin:
         db_session.delete(self)
         db_session.commit()
 
+    def asdict(self) -> dict:
+        return asdict(self)
+
+
+@dataclass
+class DatesMixin:
+    created_at: datetime = Column(DateTime, default=datetime.utcnow)
+    updated_at: datetime = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 ############################################
 # Models
 ############################################
 
+
 @dataclass
-class User(Base, CrudMixin):
+class User(Base, CrudMixin, DatesMixin):
     __tablename__ = 'users'
     id: int = Column(Integer, primary_key=True)
     uuid: str = Column(String(50), nullable=False)
@@ -49,7 +61,7 @@ class User(Base, CrudMixin):
 
 
 @dataclass
-class Label(Base, CrudMixin):
+class Label(Base, CrudMixin, DatesMixin):
     __tablename__ = 'labels'
     id: int = Column(Integer, primary_key=True)
     name: str = Column(String(50), nullable=False)
@@ -59,12 +71,14 @@ class Label(Base, CrudMixin):
 
 
 @dataclass
-class Image(Base, CrudMixin):
+class Image(Base, CrudMixin, DatesMixin):
     __tablename__ = 'images'
     id: int = Column(Integer, primary_key=True)
     user_id: int = Column(ForeignKey(User.id))
     name: str = Column(String(50), nullable=False)
     path: str = Column(String(100), nullable=False)
+    width: int = Column(Integer, nullable=False)
+    height: int = Column(Integer, nullable=False)
     inpainted_path: str = Column(String(100))
 
     def __repr__(self):
@@ -72,7 +86,7 @@ class Image(Base, CrudMixin):
 
 
 @dataclass
-class Detection(Base, CrudMixin):
+class Detection(Base, CrudMixin, DatesMixin):
     __tablename__ = 'detections'
     id: int = Column(Integer, primary_key=True)
     image_id: int = Column(ForeignKey(Image.id), nullable=False)
@@ -84,16 +98,18 @@ class Detection(Base, CrudMixin):
     w: int = Column(Integer, nullable=False)
     h: int = Column(Integer, nullable=False)
 
+    label: Label = relationship(Label, lazy='joined')
+
     def __repr__(self):
         return f'<Detection {self.id}>'
 
 
-class TaskType(Enum):
+class TaskType(str, Enum):
     DETECTION = 'detection'
     CLASSIFICATION = 'classification'
 
 
-class TaskStatus(Enum):
+class TaskStatus(str, Enum):
     PENDING = 'pending'
     RUNNING = 'running'
     SUCCESS = 'success'
@@ -101,7 +117,7 @@ class TaskStatus(Enum):
 
 
 @dataclass
-class Task(Base, CrudMixin):
+class Task(Base, CrudMixin, DatesMixin):
     __tablename__ = 'tasks'
     id: int = Column(Integer, primary_key=True)
     image_id: int = Column(ForeignKey(Image.id), nullable=False)
@@ -111,3 +127,24 @@ class Task(Base, CrudMixin):
 
     def __repr__(self):
         return f'<Task {self.id}>'
+
+    def of_image(image_id: int) -> List['Task']:
+        subquery = db_session\
+            .query(
+                Task.id,
+                func.rank().over(
+                    order_by=Task.created_at.desc(),
+                    partition_by=Task.type,
+                ),
+            )\
+            .filter(Task.image_id == image_id)\
+            .all()
+
+        task_ids = [task_id for task_id, rank in subquery if rank == 1]
+
+        tasks = db_session\
+            .query(Task)\
+            .filter(Task.id.in_(task_ids))\
+            .all()
+
+        return tasks

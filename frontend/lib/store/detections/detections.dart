@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import '/util/util.dart';
+import '/store/store.dart';
 import '/models/models.dart';
 import '/repository/repository.dart';
 import '/constants/constants.dart';
@@ -15,8 +18,8 @@ class DetectionsState with _$DetectionsState {
     required String labelsSearchTerm,
     required bool isLoadingLabels,
     required List<DetectionModel> detections,
-    required List<DetectionModel> selectedDetectionss,
-    required bool isLoadingDetectionss,
+    required Set<DetectionModel> selectedDetections,
+    required bool isLoadingDetections,
   }) = _DetectionsState;
 
   factory DetectionsState.initial() => const DetectionsState(
@@ -25,19 +28,17 @@ class DetectionsState with _$DetectionsState {
         labelsSearchTerm: Empty.STRING,
         isLoadingLabels: false,
         detections: [],
-        selectedDetectionss: [],
-        isLoadingDetectionss: false,
+        selectedDetections: {},
+        isLoadingDetections: false,
       );
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Detections extends _$Detections {
   final repository = ApiRepository();
 
   @override
-  DetectionsState build() {
-    return DetectionsState.initial();
-  }
+  DetectionsState build() => DetectionsState.initial();
 
   Future<void> getLabels() async {
     if (state.isLoadingLabels) return;
@@ -57,10 +58,6 @@ class Detections extends _$Detections {
         );
       },
       (successfulResponse) {
-        ref.read(toastsProvider.notifier).show(
-              'Labels loaded successfully. Start typing!',
-              ToastType.success,
-            );
         return state = state.copyWith(
           labels: successfulResponse.data,
           isLoadingLabels: false,
@@ -76,9 +73,47 @@ class Detections extends _$Detections {
   void searchLabels(String searchTerm) {
     state = state.copyWith(labelsSearchTerm: searchTerm);
   }
+
+  Future<void> getDetections(int taskId) async {
+    if (state.isLoadingDetections) return;
+
+    state = state.copyWith(isLoadingDetections: true);
+    final response = await repository.getDetectionsByTask(taskId);
+
+    response.fold(
+      (failure) {
+        ref.read(toastsProvider.notifier).show(
+              "Couldn't load detections. Please try again.",
+              ToastType.error,
+            );
+        return state = state.copyWith(
+          isLoadingDetections: false,
+        );
+      },
+      (successfulResponse) {
+        return state = state.copyWith(
+          detections: successfulResponse.data,
+          isLoadingDetections: false,
+        );
+      },
+    );
+  }
+
+  void toggleDetectionSelection(DetectionModel detection) {
+    final isSelected = state.selectedDetections.contains(detection);
+    final detections = state.selectedDetections.toSet();
+
+    if (isSelected) {
+      detections.remove(detection);
+    } else {
+      detections.add(detection);
+    }
+
+    state = state.copyWith(selectedDetections: detections);
+  }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 List<LabelModel> labelSuggestions(LabelSuggestionsRef ref) {
   final all = ref.watch(detectionsProvider).labels;
   final selectedIds =
@@ -93,4 +128,26 @@ List<LabelModel> labelSuggestions(LabelSuggestionsRef ref) {
         .toList(growable: false);
   }
   return const [];
+}
+
+@Riverpod(keepAlive: true)
+List<DetectionModel> relativeDetections(RelativeDetectionsRef ref) {
+  final detections = ref.watch(detectionsProvider).detections;
+  final image = ref.watch(imagesProvider).selected;
+
+  return detections.relativeToImage(image).toList();
+}
+
+extension Math on DetectionModel {
+  DetectionModel relativeToImage(ImageModel image) => copyWith(
+        xp: x / image.width,
+        yp: y / image.height,
+        wp: w / image.width,
+        hp: h / image.height,
+      );
+}
+
+extension Math2 on Iterable<DetectionModel> {
+  Iterable<DetectionModel> relativeToImage(ImageModel image) =>
+      map((e) => e.relativeToImage(image));
 }
