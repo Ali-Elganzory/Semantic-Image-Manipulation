@@ -77,7 +77,10 @@ class Detections extends _$Detections {
   Future<void> getDetections(int taskId) async {
     if (state.isLoadingDetections) return;
 
-    state = state.copyWith(isLoadingDetections: true);
+    state = state.copyWith(
+      isLoadingDetections: true,
+      detections: [],
+    );
     final response = await repository.getDetectionsByTask(taskId);
 
     response.fold(

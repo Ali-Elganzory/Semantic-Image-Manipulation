@@ -138,7 +138,7 @@ class Tasks extends _$Tasks {
   void _getTaskResult(TaskModel task) {
     if (task.status == TaskStatus.success) {
       if (task.type == TaskType.detection) {
-        ref.read(detectionsProvider.notifier).getDetections(task.imageId);
+        ref.read(detectionsProvider.notifier).getDetections(task.id);
       } else {
         // TODO: implement inpainting
       }
