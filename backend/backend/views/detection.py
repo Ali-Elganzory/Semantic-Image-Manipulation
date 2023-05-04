@@ -23,6 +23,8 @@ def labels():
 @bp.post('/')
 def detect():
     image_id = request.json['image_id']
+    label_ids = request.json['label_ids']
+
     task = Task(
         image_id=image_id,
         type=TaskType.DETECTION,
@@ -32,6 +34,7 @@ def detect():
 
     detection_task.delay(
         task.id,
+        label_ids,
     )
 
     return {

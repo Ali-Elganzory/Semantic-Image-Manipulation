@@ -74,19 +74,27 @@ class YOLO:
     def labels(self):
         return [*self.class_names]
 
-    def detect(self, images: Union[List[np.ndarray], np.ndarray], classes: str = None) -> Union[List[List[BBox]], List[BBox]]:
+    def detect(
+            self,
+            images: Union[List[np.ndarray], np.ndarray],
+            label_ids: List[int] = [],
+    ) -> Union[List[List[BBox]], List[BBox]]:
         if isinstance(images, np.ndarray):
             images = [images]
+
         results: Iterable[Results] = map(
             lambda x: x.cpu().numpy(), self.detection_model(images))
         bounding_boxes = [[BBox(*map(lambda x: int(x), result.boxes.xyxy[i]),
                                 result.boxes.conf[i],
                                 int(result.boxes.cls[i]),
-                                self.class_names[int(result.boxes.cls[i])])]
-                          for result in results for i in range(len(result.boxes))]
-        if classes:
-            bounding_boxes = [[box for box in boxes if box.label in classes]
+                                self.class_names[int(result.boxes.cls[i])])
+                           for i in range(len(result.boxes))]
+                          for result in results]
+
+        if len(label_ids) > 0:
+            bounding_boxes = [[box for box in boxes if box.label_id in label_ids]
                               for boxes in bounding_boxes]
+
         return bounding_boxes[0] if len(bounding_boxes) == 1 else bounding_boxes
 
     def segment(self, image: np.ndarray):

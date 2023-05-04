@@ -56,6 +56,7 @@ class Canvas extends HookConsumerWidget {
                   Positioned.fill(
                     child: Image(
                       image: imageProvider,
+                      fit: BoxFit.contain,
                     ),
                   ),
                   for (final detection in detections)

@@ -37,7 +37,11 @@ class Tasks extends _$Tasks {
 
   static const _pollingInterval = Duration(seconds: 1);
 
-  Future<void> detect(int imageId) async {
+  Future<void> detect() async {
+    final imageId = ref.read(imagesProvider).selected.id;
+    final labelIds =
+        ref.read(detectionsProvider).selectedLabels.map((e) => e.id).toList();
+
     // Optimistically add a task to the list
     final task = TaskModel(
       id: Empty.INT,
@@ -53,7 +57,10 @@ class Tasks extends _$Tasks {
     );
 
     // Send request
-    final response = await repository.detect(imageId);
+    final response = await repository.detect(
+      imageId,
+      labelIds,
+    );
     response.fold(
       (failure) {
         _failed('Failed to detect');

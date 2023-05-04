@@ -68,11 +68,15 @@ class ApiRepository {
     );
   }
 
-  RepositoryResponse<TaskModel> detect(int imageId) {
+  RepositoryResponse<TaskModel> detect(
+    int imageId,
+    List<int> labelIds,
+  ) {
     return _apiHttpClient.post<TaskModel, TaskModel>(
       path: ApiUrl.detect,
       payload: {
         'image_id': imageId,
+        'label_ids': labelIds,
       },
     );
   }

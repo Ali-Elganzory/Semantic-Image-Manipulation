@@ -50,7 +50,7 @@ class _EditImageState extends ConsumerState<EditImage> {
     }
 
     void onDetectPressed() {
-      ref.read(tasksProvider.notifier).detect(image.id);
+      ref.read(tasksProvider.notifier).detect();
     }
 
     return Stack(

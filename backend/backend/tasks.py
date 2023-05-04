@@ -11,7 +11,11 @@ from backend.models import (
 
 
 @shared_task(bind=True)
-def detect(self: FlaskTask, task_id: int) -> None:
+def detect(
+    self: FlaskTask,
+    task_id: int,
+    label_ids: List[int],
+) -> None:
     task = Task().get(task_id)
     task.status = TaskStatus.RUNNING
     task.update()
@@ -35,7 +39,10 @@ def detect(self: FlaskTask, task_id: int) -> None:
             failed()
             return
 
-        result: List[BBox] = self.detection_model.detect(image_file)
+        result: List[BBox] = self.detection_model.detect(
+            image_file,
+            label_ids,
+        )
         for detection in result:
             Detection(
                 image_id=task.image_id,
