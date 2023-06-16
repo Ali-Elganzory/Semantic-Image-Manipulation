@@ -3,3 +3,4 @@ export 'image/image.dart';
 export 'label/label.dart';
 export 'detection/detection.dart';
 export 'task/task.dart';
+export 'modified_image/modified_image.dart';

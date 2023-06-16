@@ -24,6 +24,7 @@ Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
 const _$TaskTypeEnumMap = {
   TaskType.detection: 'detection',
   TaskType.inpainting: 'inpainting',
+  TaskType.editing: 'editing',
 };
 
 const _$TaskStatusEnumMap = {

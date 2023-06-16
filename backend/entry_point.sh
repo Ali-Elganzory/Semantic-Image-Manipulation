@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Activate virtual environment
+. .venv/bin/activate
+
 # Init database (this erases the db, and updates the schema)
 # flask --app backend init-db
 

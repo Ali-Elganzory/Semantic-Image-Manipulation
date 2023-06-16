@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'editing.dart';
+part of 'tabs.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$editingHash() => r'efe01389a24e02a7c6cd65c0d361f6019520186a';
+String _$tabsHash() => r'b8c260afa33ad644dda682241dea444daf51dafd';
 
-/// See also [Editing].
-@ProviderFor(Editing)
-final editingProvider = NotifierProvider<Editing, EditingState>.internal(
-  Editing.new,
-  name: r'editingProvider',
+/// See also [Tabs].
+@ProviderFor(Tabs)
+final tabsProvider = NotifierProvider<Tabs, TabsState>.internal(
+  Tabs.new,
+  name: r'tabsProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$editingHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$tabsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Editing = Notifier<EditingState>;
+typedef _$Tabs = Notifier<TabsState>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

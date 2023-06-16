@@ -80,4 +80,29 @@ class ApiRepository {
       },
     );
   }
+
+  RepositoryResponse<List<ModifiedImageModel>> getEditsByImage(int imageId) {
+    return _apiHttpClient.get<List<ModifiedImageModel>, ModifiedImageModel>(
+      path: '${ApiUrl.getEditsByImage}/$imageId',
+    );
+  }
+
+  RepositoryResponse<ModifiedImageModel> getEditByTask(int taskId) {
+    return _apiHttpClient.get<ModifiedImageModel, ModifiedImageModel>(
+      path: '${ApiUrl.getEditByTask}/$taskId',
+    );
+  }
+
+  RepositoryResponse<TaskModel> edit(
+    int imageId,
+    String prompt,
+  ) {
+    return _apiHttpClient.post<TaskModel, TaskModel>(
+      path: ApiUrl.edit,
+      payload: {
+        'image_id': imageId,
+        'prompt': prompt,
+      },
+    );
+  }
 }

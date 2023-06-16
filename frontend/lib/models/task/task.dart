@@ -6,6 +6,7 @@ part 'task.g.dart';
 enum TaskType {
   detection,
   inpainting,
+  editing,
 }
 
 enum TaskStatus {
@@ -35,6 +36,8 @@ extension TaskTypeString on TaskType {
         return 'Detection';
       case TaskType.inpainting:
         return 'Inpainting';
+      case TaskType.editing:
+        return 'Dream';
     }
   }
 }

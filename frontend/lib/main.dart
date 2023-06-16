@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         child: ScrollConfiguration(
       behavior: const ScrollBehaviorModified(),
       child: MaterialApp.router(
-        title: 'Imaginto',
+        title: 'PaintX',
         theme: ThemeData(
           colorScheme: const ColorScheme.dark(),
           scaffoldBackgroundColor: Colors.white,

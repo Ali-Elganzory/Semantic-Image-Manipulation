@@ -22,7 +22,22 @@ final isDetectionRunningProvider = Provider<bool>.internal(
 );
 
 typedef IsDetectionRunningRef = ProviderRef<bool>;
-String _$tasksHash() => r'ddd6b92215e84d10fa475e53d16f1dfd01b614ae';
+String _$isEditingRunningHash() => r'195ed606fb7ffa15805309462b04a0d47c34f90a';
+
+/// See also [isEditingRunning].
+@ProviderFor(isEditingRunning)
+final isEditingRunningProvider = Provider<bool>.internal(
+  isEditingRunning,
+  name: r'isEditingRunningProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$isEditingRunningHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef IsEditingRunningRef = ProviderRef<bool>;
+String _$tasksHash() => r'ab52819180431cd94a508fae4f4452ed69664786';
 
 /// See also [Tasks].
 @ProviderFor(Tasks)

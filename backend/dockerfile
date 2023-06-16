@@ -4,27 +4,22 @@ FROM python:3.11
 # Install libgl1-mesa-glx (required by matplotlib)
 RUN apt update && apt install -y libgl1-mesa-glx
 
-# Install poetry (python dependency manager)
-RUN pip install poetry --no-cache-dir
-
-# Set the cache directory of poetry
-ENV POETRY_CACHE_DIR=/app/.cache/pypoetry
-
-# Disable virtual environment creation
-ENV POETRY_VIRTUALENVS_CREATE=false
-
 # Set working directory
 WORKDIR /app
-
-# Copy poetry files
-COPY pyproject.toml ./
-
-# Install python dependencies
-RUN --mount=type=cache,target=/app/.cache/pypoetry \
-    poetry install
 
 # Expose port
 EXPOSE 80
 
 # Run application
 ENTRYPOINT [ "./entry_point.sh" ]
+
+# Create virtual environment if not exists
+RUN python -m venv .venv
+
+# Copy requirements.txt to container
+COPY requirements.txt ./
+
+# Install python dependencies
+RUN --mount=type=cache,target=/root/.cache/pip \
+    . .venv/bin/activate && \
+    pip install -r requirements.txt

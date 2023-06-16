@@ -63,6 +63,7 @@ class Images extends _$Images {
 
   void select(ImageModel image) {
     state = state.copyWith(selected: image);
+    ref.read(tabsProvider.notifier).select(ref.read(tabsProvider).tabs.first);
     ref.read(tasksProvider.notifier).getTasks(image.id);
   }
 

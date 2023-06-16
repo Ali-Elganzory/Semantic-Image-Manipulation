@@ -1,3 +1,5 @@
+import 'package:frontend/repository/contracts/repository_response.dart';
+
 import '/util/util.dart';
 import '/store/store.dart';
 import '/models/models.dart';
@@ -42,28 +44,50 @@ class Tasks extends _$Tasks {
     final labelIds =
         ref.read(detectionsProvider).selectedLabels.map((e) => e.id).toList();
 
+    final taskFuture = repository.detect(
+      imageId,
+      labelIds,
+    );
+
+    _handleNewTask(TaskType.detection, taskFuture);
+  }
+
+  Future<void> edit(String prompt) async {
+    final imageId = ref.read(imagesProvider).selected.id;
+
+    final taskFuture = repository.edit(
+      imageId,
+      prompt,
+    );
+
+    _handleNewTask(TaskType.editing, taskFuture);
+  }
+
+  Future<void> _handleNewTask(
+    TaskType type,
+    RepositoryResponse<TaskModel> taskFuture,
+  ) async {
+    final imageId = ref.read(imagesProvider).selected.id;
+
     // Optimistically add a task to the list
     final task = TaskModel(
       id: Empty.INT,
       imageId: imageId,
-      type: TaskType.detection,
+      type: type,
       status: TaskStatus.pending,
     );
     state = state.copyWith(
       tasks: [
-        ...state.tasks.where((e) => e.type != TaskType.detection),
+        ...state.tasks.where((e) => e.type != type),
         task,
       ],
     );
 
     // Send request
-    final response = await repository.detect(
-      imageId,
-      labelIds,
-    );
+    final response = await taskFuture;
     response.fold(
       (failure) {
-        _failed('Failed to detect');
+        _failed('Failed to dream');
         state = state.copyWith(
           tasks: [...state.tasks.where((t) => t.id != task.id)],
         );
@@ -146,8 +170,8 @@ class Tasks extends _$Tasks {
     if (task.status == TaskStatus.success) {
       if (task.type == TaskType.detection) {
         ref.read(detectionsProvider.notifier).getDetections(task.id);
-      } else {
-        // TODO: implement inpainting
+      } else if (task.type == TaskType.editing) {
+        ref.read(modifiedImagesProvider.notifier).getEditingImages(task.id);
       }
     } else {
       _failed('${task.type.string} failed');
@@ -174,4 +198,11 @@ bool isDetectionRunning(IsDetectionRunningRef ref) {
   final tasks = ref.watch(tasksProvider).tasks;
   return tasks.any((task) =>
       task.type == TaskType.detection && task.status == TaskStatus.running);
+}
+
+@Riverpod(keepAlive: true)
+bool isEditingRunning(IsDetectionRunningRef ref) {
+  final tasks = ref.watch(tasksProvider).tasks;
+  return tasks.any((task) =>
+      task.type == TaskType.editing && task.status == TaskStatus.running);
 }

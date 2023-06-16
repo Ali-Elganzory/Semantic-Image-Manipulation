@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/models.dart';
 
 import '/store/store.dart';
+import '/models/models.dart';
 import '/components/components.dart';
 import '/third_party/third_party.dart';
 
-class Canvas extends HookConsumerWidget {
-  const Canvas({
+class DetectionCanvas extends HookConsumerWidget {
+  const DetectionCanvas({
     super.key,
   });
 
