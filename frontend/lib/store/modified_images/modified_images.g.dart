@@ -6,7 +6,7 @@ part of 'modified_images.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$modifiedImagesHash() => r'bb307783c94dcda36638d68fd6bbdd6a9ae9e948';
+String _$modifiedImagesHash() => r'3b9420b4005776a565675e75eac4499f017e20d7';
 
 /// See also [ModifiedImages].
 @ProviderFor(ModifiedImages)

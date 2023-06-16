@@ -1,0 +1,15 @@
+indir: /app/backend/ml/Inpainter/lama_input/
+outdir: /app/backend/ml/Inpainter/lama_output/
+
+model:
+  path: /app/backend/ml/Inpainter/big-lama
+  checkpoint: best.ckpt
+
+dataset:
+  kind: default
+  img_suffix: .jpg
+  pad_out_to_modulo: 8
+
+device: cuda
+out_ext: .jpg
+out_key: inpainted

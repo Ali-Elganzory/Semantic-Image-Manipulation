@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/util/util.dart';
+import '/store/store.dart';
 import '/constants/constants.dart';
 import '/third_party/third_party.dart';
 
@@ -19,53 +20,46 @@ class Tab with _$Tab {
   }) = _Tab;
 }
 
-@freezed
-class TabsState with _$TabsState {
-  const TabsState._();
+@Riverpod(keepAlive: true)
+class TabIndex extends _$TabIndex {
+  @override
+  int build() {
+    return 0;
+  }
 
-  const factory TabsState({
-    required List<Tab> tabs,
-    required Tab selectedTab,
-  }) = _TabsState;
-
-  static const _initialTabs = [
-    Tab(
-      icon: FontAwesomeIcons.vectorSquare,
-      label: 'Detect',
-    ),
-    Tab(
-      icon: FontAwesomeIcons.eraser,
-      label: 'Erase',
-      isDisabled: true,
-      disabledTooltip: 'Detect first!',
-    ),
-    Tab(
-      icon: FontAwesomeIcons.brush,
-      label: 'Dream',
-      isDisabled: true,
-      disabledTooltip: 'Coming soon!',
-    ),
-  ];
-
-  factory TabsState.initial() => TabsState(
-        tabs: _initialTabs,
-        selectedTab: _initialTabs.first,
-      );
+  void set(int index) {
+    state = index;
+  }
 }
 
 @Riverpod(keepAlive: true)
 class Tabs extends _$Tabs {
   @override
-  TabsState build() {
-    return TabsState.initial();
+  List<Tab> build() {
+    final isInpaintingEnabled = ref.watch(isInpaintingEnabledProvider);
+
+    return [
+      const Tab(
+        icon: FontAwesomeIcons.vectorSquare,
+        label: 'Detect',
+      ),
+      Tab(
+        icon: FontAwesomeIcons.eraser,
+        label: 'Erase',
+        isDisabled: !isInpaintingEnabled,
+        disabledTooltip: 'Detect first!',
+      ),
+      const Tab(
+        icon: FontAwesomeIcons.brush,
+        label: 'Dream',
+        isDisabled: true,
+        disabledTooltip: 'Coming soon!',
+      ),
+    ];
   }
 
   void select(Tab tab) {
-    if (tab == state.selectedTab) {
-      return;
-    }
-
-    if (!state.tabs.contains(tab)) {
+    if (!state.contains(tab)) {
       ref.read(toastsProvider.notifier).show(
             'Tab not found',
             ToastType.error,
@@ -73,6 +67,14 @@ class Tabs extends _$Tabs {
       return;
     }
 
-    state = state.copyWith(selectedTab: tab);
+    ref.read(tabIndexProvider.notifier).set(state.indexOf(tab));
   }
+}
+
+@Riverpod(keepAlive: true)
+Tab selectedTab(SelectedTabRef ref) {
+  final tabs = ref.watch(tabsProvider);
+  final index = ref.watch(tabIndexProvider);
+
+  return tabs[index];
 }

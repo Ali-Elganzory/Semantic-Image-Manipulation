@@ -16,6 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ModifiedImagesState {
+  List<ModifiedImageModel> get inpaintingImages =>
+      throw _privateConstructorUsedError;
+  bool get isLoadingInpaintingImages => throw _privateConstructorUsedError;
+  bool get isLoadingInpaintingTaskImage => throw _privateConstructorUsedError;
   List<ModifiedImageModel> get editingImages =>
       throw _privateConstructorUsedError;
   bool get isLoadingEditingImages => throw _privateConstructorUsedError;
@@ -33,7 +37,10 @@ abstract class $ModifiedImagesStateCopyWith<$Res> {
       _$ModifiedImagesStateCopyWithImpl<$Res, ModifiedImagesState>;
   @useResult
   $Res call(
-      {List<ModifiedImageModel> editingImages,
+      {List<ModifiedImageModel> inpaintingImages,
+      bool isLoadingInpaintingImages,
+      bool isLoadingInpaintingTaskImage,
+      List<ModifiedImageModel> editingImages,
       bool isLoadingEditingImages,
       bool isLoadingEditingTaskImage});
 }
@@ -51,11 +58,26 @@ class _$ModifiedImagesStateCopyWithImpl<$Res, $Val extends ModifiedImagesState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? inpaintingImages = null,
+    Object? isLoadingInpaintingImages = null,
+    Object? isLoadingInpaintingTaskImage = null,
     Object? editingImages = null,
     Object? isLoadingEditingImages = null,
     Object? isLoadingEditingTaskImage = null,
   }) {
     return _then(_value.copyWith(
+      inpaintingImages: null == inpaintingImages
+          ? _value.inpaintingImages
+          : inpaintingImages // ignore: cast_nullable_to_non_nullable
+              as List<ModifiedImageModel>,
+      isLoadingInpaintingImages: null == isLoadingInpaintingImages
+          ? _value.isLoadingInpaintingImages
+          : isLoadingInpaintingImages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingInpaintingTaskImage: null == isLoadingInpaintingTaskImage
+          ? _value.isLoadingInpaintingTaskImage
+          : isLoadingInpaintingTaskImage // ignore: cast_nullable_to_non_nullable
+              as bool,
       editingImages: null == editingImages
           ? _value.editingImages
           : editingImages // ignore: cast_nullable_to_non_nullable
@@ -81,7 +103,10 @@ abstract class _$$_ModifiedImagesStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<ModifiedImageModel> editingImages,
+      {List<ModifiedImageModel> inpaintingImages,
+      bool isLoadingInpaintingImages,
+      bool isLoadingInpaintingTaskImage,
+      List<ModifiedImageModel> editingImages,
       bool isLoadingEditingImages,
       bool isLoadingEditingTaskImage});
 }
@@ -97,11 +122,26 @@ class __$$_ModifiedImagesStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? inpaintingImages = null,
+    Object? isLoadingInpaintingImages = null,
+    Object? isLoadingInpaintingTaskImage = null,
     Object? editingImages = null,
     Object? isLoadingEditingImages = null,
     Object? isLoadingEditingTaskImage = null,
   }) {
     return _then(_$_ModifiedImagesState(
+      inpaintingImages: null == inpaintingImages
+          ? _value._inpaintingImages
+          : inpaintingImages // ignore: cast_nullable_to_non_nullable
+              as List<ModifiedImageModel>,
+      isLoadingInpaintingImages: null == isLoadingInpaintingImages
+          ? _value.isLoadingInpaintingImages
+          : isLoadingInpaintingImages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingInpaintingTaskImage: null == isLoadingInpaintingTaskImage
+          ? _value.isLoadingInpaintingTaskImage
+          : isLoadingInpaintingTaskImage // ignore: cast_nullable_to_non_nullable
+              as bool,
       editingImages: null == editingImages
           ? _value._editingImages
           : editingImages // ignore: cast_nullable_to_non_nullable
@@ -122,11 +162,28 @@ class __$$_ModifiedImagesStateCopyWithImpl<$Res>
 
 class _$_ModifiedImagesState implements _ModifiedImagesState {
   const _$_ModifiedImagesState(
-      {required final List<ModifiedImageModel> editingImages,
+      {required final List<ModifiedImageModel> inpaintingImages,
+      required this.isLoadingInpaintingImages,
+      required this.isLoadingInpaintingTaskImage,
+      required final List<ModifiedImageModel> editingImages,
       required this.isLoadingEditingImages,
       required this.isLoadingEditingTaskImage})
-      : _editingImages = editingImages;
+      : _inpaintingImages = inpaintingImages,
+        _editingImages = editingImages;
 
+  final List<ModifiedImageModel> _inpaintingImages;
+  @override
+  List<ModifiedImageModel> get inpaintingImages {
+    if (_inpaintingImages is EqualUnmodifiableListView)
+      return _inpaintingImages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_inpaintingImages);
+  }
+
+  @override
+  final bool isLoadingInpaintingImages;
+  @override
+  final bool isLoadingInpaintingTaskImage;
   final List<ModifiedImageModel> _editingImages;
   @override
   List<ModifiedImageModel> get editingImages {
@@ -142,7 +199,7 @@ class _$_ModifiedImagesState implements _ModifiedImagesState {
 
   @override
   String toString() {
-    return 'ModifiedImagesState(editingImages: $editingImages, isLoadingEditingImages: $isLoadingEditingImages, isLoadingEditingTaskImage: $isLoadingEditingTaskImage)';
+    return 'ModifiedImagesState(inpaintingImages: $inpaintingImages, isLoadingInpaintingImages: $isLoadingInpaintingImages, isLoadingInpaintingTaskImage: $isLoadingInpaintingTaskImage, editingImages: $editingImages, isLoadingEditingImages: $isLoadingEditingImages, isLoadingEditingTaskImage: $isLoadingEditingTaskImage)';
   }
 
   @override
@@ -150,6 +207,15 @@ class _$_ModifiedImagesState implements _ModifiedImagesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ModifiedImagesState &&
+            const DeepCollectionEquality()
+                .equals(other._inpaintingImages, _inpaintingImages) &&
+            (identical(other.isLoadingInpaintingImages,
+                    isLoadingInpaintingImages) ||
+                other.isLoadingInpaintingImages == isLoadingInpaintingImages) &&
+            (identical(other.isLoadingInpaintingTaskImage,
+                    isLoadingInpaintingTaskImage) ||
+                other.isLoadingInpaintingTaskImage ==
+                    isLoadingInpaintingTaskImage) &&
             const DeepCollectionEquality()
                 .equals(other._editingImages, _editingImages) &&
             (identical(other.isLoadingEditingImages, isLoadingEditingImages) ||
@@ -162,6 +228,9 @@ class _$_ModifiedImagesState implements _ModifiedImagesState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(_inpaintingImages),
+      isLoadingInpaintingImages,
+      isLoadingInpaintingTaskImage,
       const DeepCollectionEquality().hash(_editingImages),
       isLoadingEditingImages,
       isLoadingEditingTaskImage);
@@ -176,10 +245,19 @@ class _$_ModifiedImagesState implements _ModifiedImagesState {
 
 abstract class _ModifiedImagesState implements ModifiedImagesState {
   const factory _ModifiedImagesState(
-      {required final List<ModifiedImageModel> editingImages,
+      {required final List<ModifiedImageModel> inpaintingImages,
+      required final bool isLoadingInpaintingImages,
+      required final bool isLoadingInpaintingTaskImage,
+      required final List<ModifiedImageModel> editingImages,
       required final bool isLoadingEditingImages,
       required final bool isLoadingEditingTaskImage}) = _$_ModifiedImagesState;
 
+  @override
+  List<ModifiedImageModel> get inpaintingImages;
+  @override
+  bool get isLoadingInpaintingImages;
+  @override
+  bool get isLoadingInpaintingTaskImage;
   @override
   List<ModifiedImageModel> get editingImages;
   @override

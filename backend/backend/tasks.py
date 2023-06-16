@@ -49,6 +49,61 @@ def detect(
 
 
 @shared_task(bind=True)
+def inpaint(
+    self: FlaskTask,
+    task_id: int,
+    detection_ids: List[int],
+) -> None:
+    task = Task().get(task_id)
+
+    def handler():
+        # Get input image
+        image = Image().get(task.image_id)
+
+        if image is None:
+            raise HandlerException()
+
+        image_file = cv2.imread(image.path)
+        if image_file is None:
+            raise HandlerException()
+
+        # Create bounding boxes
+        detections: List[Detection] = Detection().all(detection_ids)
+        bboxs = map(
+            lambda detection: BBox(
+                detection.x,
+                detection.y,
+                detection.x + detection.w,
+                detection.y + detection.h,
+                detection.confidence,
+                detection.label_id,
+                detection.label,
+            ),
+            detections,
+        )
+
+        # Generate mask
+        mask = self.mask_generator.generate(image_file, bboxs)
+        mask_path = self.generate_mask_path("jpg")
+        cv2.imwrite(mask_path, mask)
+
+        # Generate modified image path
+        output_image_path = self.generate_modified_path("jpg")
+
+        # Inpaint
+        self.inpainting_model.inpaint(image.path, mask_path, output_image_path)
+
+        # Save modified image
+        ModifiedImage(
+            image_id=task.image_id,
+            task_id=task.id,
+            path=output_image_path,
+        ).save()
+
+    handle_task(task, handler)
+
+
+@shared_task(bind=True)
 def edit(
     self: FlaskTask,
     task_id: int,
@@ -96,13 +151,13 @@ def handle_task(
         task.status = TaskStatus.SUCCESS
         task.update()
 
-    # try:
-    handler()
-    success()
+    try:
+        handler()
+        success()
 
-    # except HandlerException:
-    #     failed()
+    except HandlerException:
+        failed()
 
-    # except Exception:
-    #     failed()
-    #     raise
+    except Exception:
+        failed()
+        raise

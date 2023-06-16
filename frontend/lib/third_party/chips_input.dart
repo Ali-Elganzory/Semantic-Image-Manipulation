@@ -294,11 +294,9 @@ class ChipsInputState<T> extends State<ChipsInput<T>> with TextInputClient {
 class _TextCaret extends StatefulWidget {
   const _TextCaret({
     Key? key,
-    this.duration = const Duration(milliseconds: 500),
     this.resumed = false,
   }) : super(key: key);
 
-  final Duration duration;
   final bool resumed;
 
   @override
@@ -313,7 +311,7 @@ class _TextCursorState extends State<_TextCaret>
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(widget.duration, _onTimer);
+    _timer = Timer.periodic(const Duration(milliseconds: 500), _onTimer);
   }
 
   void _onTimer(Timer timer) {

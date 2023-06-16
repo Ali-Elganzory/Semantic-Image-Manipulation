@@ -42,6 +42,9 @@ class CrudMixin:
         db_session.delete(self)
         db_session.commit()
 
+    def all(self, ids: List[int]) -> List[Self]:
+        return db_session.query(self.__class__).filter(self.__class__.id.in_(ids)).all()
+
     def asdict(self) -> dict:
         return asdict(self)
 
@@ -88,7 +91,6 @@ class Image(Base, CrudMixin, DatesMixin):
     path: str = Column(String(100), nullable=False)
     width: int = Column(Integer, nullable=False)
     height: int = Column(Integer, nullable=False)
-    inpainted_path: str = Column(String(100))
 
     def __repr__(self):
         return f"<Image {self.name} ({self.path})>"
@@ -105,11 +107,20 @@ class ModifiedImage(Base, CrudMixin, DatesMixin):
     def __repr__(self):
         return f"<ModifiedImage {self.id}>"
 
-    def of_image(self, image_id: int) -> List[Self]:
-        return db_session.query(self.__class__).filter_by(image_id=image_id).all()
+    def of_image(image_id: int) -> List[Self]:
+        return db_session.query(ModifiedImage).filter_by(image_id=image_id).all()
 
-    def of_task(self, task_id: int) -> List[Self]:
-        return db_session.query(self.__class__).filter_by(task_id=task_id).all()
+    def inpaints_of_image(image_id: int) -> List[Self]:
+        return (
+            db_session.query(ModifiedImage)
+            .join(Task, ModifiedImage.task_id == Task.id)
+            .filter(ModifiedImage.image_id == image_id)
+            .filter(Task.type == TaskType.INPAINTING)
+            .all()
+        )
+
+    def of_task(task_id: int) -> Self:
+        return db_session.query(ModifiedImage).filter_by(task_id=task_id).first()
 
 
 @dataclass
@@ -134,6 +145,7 @@ class Detection(Base, CrudMixin, DatesMixin):
 class TaskType(str, Enum):
     DETECTION = "detection"
     EDITING = "editing"
+    INPAINTING = "inpainting"
 
 
 class TaskStatus(str, Enum):

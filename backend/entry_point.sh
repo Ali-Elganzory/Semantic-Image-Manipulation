@@ -9,6 +9,10 @@
 # Update labels in database
 flask --app backend update-labels
 
+# Make LaMa directories
+mkdir -p backend/ml/Inpainter/lama_input
+mkdir -p backend/ml/Inpainter/lama_output
+
 # Run flask app
 flask --app backend run --debug --host 0.0.0.0 --port 80 &
 

@@ -53,8 +53,8 @@ class TaskChip extends HookConsumerWidget {
                     color: statusColor,
                   ),
                 ),
-                const Text(
-                  'Detection',
+                Text(
+                  task.type.string,
                 ),
                 if (isHovering.value)
                   Text(

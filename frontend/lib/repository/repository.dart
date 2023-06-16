@@ -81,6 +81,33 @@ class ApiRepository {
     );
   }
 
+  RepositoryResponse<TaskModel> inpaint(
+    int imageId,
+    List<int> detectionIds,
+  ) {
+    return _apiHttpClient.post<TaskModel, TaskModel>(
+      path: ApiUrl.inpaint,
+      payload: {
+        'image_id': imageId,
+        'detection_ids': detectionIds,
+      },
+    );
+  }
+
+  RepositoryResponse<ModifiedImageModel> getInpaintByTask(int taskId) {
+    return _apiHttpClient.get<ModifiedImageModel, ModifiedImageModel>(
+      path: '${ApiUrl.getInpaintByTask}/$taskId',
+    );
+  }
+
+  RepositoryResponse<List<ModifiedImageModel>> getInpaintsByImage(
+    int imageId,
+  ) {
+    return _apiHttpClient.get<List<ModifiedImageModel>, ModifiedImageModel>(
+      path: '${ApiUrl.getInpaintsByImage}/$imageId',
+    );
+  }
+
   RepositoryResponse<List<ModifiedImageModel>> getEditsByImage(int imageId) {
     return _apiHttpClient.get<List<ModifiedImageModel>, ModifiedImageModel>(
       path: '${ApiUrl.getEditsByImage}/$imageId',

@@ -15,6 +15,7 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, "database.sqlite"),
         UPLOAD_FOLDER=os.path.join(app.instance_path, "uploads"),
         MODIFIED_FOLDER=os.path.join(app.instance_path, "modified"),
+        MASKS_FOLDER=os.path.join(app.instance_path, "masks"),
         CELERY=dict(
             broker_url="redis://redis",
             result_backend="redis://redis",
@@ -35,30 +36,17 @@ def create_app(test_config=None):
             app.instance_path,
             app.config["UPLOAD_FOLDER"],
             app.config["MODIFIED_FOLDER"],
+            app.config["MASKS_FOLDER"],
         ]
         for folder in folders:
-            os.makedirs(folder)
+            os.makedirs(folder, exist_ok=True)
     except OSError:
         pass
 
-    # Celery
-    from . import celery_app
+    # Initialize services
+    from . import celery_app, database, commands, views
 
-    celery_app.init_app(app)
-
-    # Database
-    from . import database
-
-    database.init_app(app)
-
-    # Commands
-    from . import commands
-
-    commands.init_app(app)
-
-    # Views
-    from . import views
-
-    views.init_app(app)
+    for service in [celery_app, database, commands, views]:
+        service.init_app(app)
 
     return app

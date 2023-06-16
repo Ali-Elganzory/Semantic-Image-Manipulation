@@ -6,6 +6,37 @@ part of 'tasks.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$isInpaintingEnabledHash() =>
+    r'82f3e1cd75822a9b2d29407e9d44944d8687a844';
+
+/// See also [isInpaintingEnabled].
+@ProviderFor(isInpaintingEnabled)
+final isInpaintingEnabledProvider = Provider<bool>.internal(
+  isInpaintingEnabled,
+  name: r'isInpaintingEnabledProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$isInpaintingEnabledHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef IsInpaintingEnabledRef = ProviderRef<bool>;
+String _$readyToInpaintHash() => r'406e18a4734bb93458ef73921b8ae6ae8bb294ba';
+
+/// See also [readyToInpaint].
+@ProviderFor(readyToInpaint)
+final readyToInpaintProvider = Provider<bool>.internal(
+  readyToInpaint,
+  name: r'readyToInpaintProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$readyToInpaintHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ReadyToInpaintRef = ProviderRef<bool>;
 String _$isDetectionRunningHash() =>
     r'f5e019caee38280593b91dbd6e14ad4b7e4973bb';
 
@@ -22,7 +53,23 @@ final isDetectionRunningProvider = Provider<bool>.internal(
 );
 
 typedef IsDetectionRunningRef = ProviderRef<bool>;
-String _$isEditingRunningHash() => r'195ed606fb7ffa15805309462b04a0d47c34f90a';
+String _$isInpaintingRunningHash() =>
+    r'b949d1129a8d5ffac819a303569b6faa9b71e867';
+
+/// See also [isInpaintingRunning].
+@ProviderFor(isInpaintingRunning)
+final isInpaintingRunningProvider = Provider<bool>.internal(
+  isInpaintingRunning,
+  name: r'isInpaintingRunningProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$isInpaintingRunningHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef IsInpaintingRunningRef = ProviderRef<bool>;
+String _$isEditingRunningHash() => r'3de71369186b703fe7e9941c3bfdc3940cf35e1f';
 
 /// See also [isEditingRunning].
 @ProviderFor(isEditingRunning)
@@ -37,7 +84,7 @@ final isEditingRunningProvider = Provider<bool>.internal(
 );
 
 typedef IsEditingRunningRef = ProviderRef<bool>;
-String _$tasksHash() => r'ab52819180431cd94a508fae4f4452ed69664786';
+String _$tasksHash() => r'aee075b763b56597ed4fb0196d1ce54ee91cccd1';
 
 /// See also [Tasks].
 @ProviderFor(Tasks)

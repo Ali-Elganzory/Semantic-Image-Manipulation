@@ -25,7 +25,6 @@ mixin _$ImageModel {
   String get url => throw _privateConstructorUsedError;
   int get width => throw _privateConstructorUsedError;
   int get height => throw _privateConstructorUsedError;
-  String get inpaintedUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,13 +38,7 @@ abstract class $ImageModelCopyWith<$Res> {
           ImageModel value, $Res Function(ImageModel) then) =
       _$ImageModelCopyWithImpl<$Res, ImageModel>;
   @useResult
-  $Res call(
-      {int id,
-      String name,
-      String url,
-      int width,
-      int height,
-      String inpaintedUrl});
+  $Res call({int id, String name, String url, int width, int height});
 }
 
 /// @nodoc
@@ -66,7 +59,6 @@ class _$ImageModelCopyWithImpl<$Res, $Val extends ImageModel>
     Object? url = null,
     Object? width = null,
     Object? height = null,
-    Object? inpaintedUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -89,10 +81,6 @@ class _$ImageModelCopyWithImpl<$Res, $Val extends ImageModel>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int,
-      inpaintedUrl: null == inpaintedUrl
-          ? _value.inpaintedUrl
-          : inpaintedUrl // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -105,13 +93,7 @@ abstract class _$$_ImageModelCopyWith<$Res>
       __$$_ImageModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      String name,
-      String url,
-      int width,
-      int height,
-      String inpaintedUrl});
+  $Res call({int id, String name, String url, int width, int height});
 }
 
 /// @nodoc
@@ -130,7 +112,6 @@ class __$$_ImageModelCopyWithImpl<$Res>
     Object? url = null,
     Object? width = null,
     Object? height = null,
-    Object? inpaintedUrl = null,
   }) {
     return _then(_$_ImageModel(
       id: null == id
@@ -153,10 +134,6 @@ class __$$_ImageModelCopyWithImpl<$Res>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int,
-      inpaintedUrl: null == inpaintedUrl
-          ? _value.inpaintedUrl
-          : inpaintedUrl // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -169,8 +146,7 @@ class _$_ImageModel extends _ImageModel {
       this.name = Empty.STRING,
       this.url = Empty.STRING,
       this.width = Empty.INT,
-      this.height = Empty.INT,
-      this.inpaintedUrl = Empty.STRING})
+      this.height = Empty.INT})
       : super._();
 
   factory _$_ImageModel.fromJson(Map<String, dynamic> json) =>
@@ -191,13 +167,10 @@ class _$_ImageModel extends _ImageModel {
   @override
   @JsonKey()
   final int height;
-  @override
-  @JsonKey()
-  final String inpaintedUrl;
 
   @override
   String toString() {
-    return 'ImageModel(id: $id, name: $name, url: $url, width: $width, height: $height, inpaintedUrl: $inpaintedUrl)';
+    return 'ImageModel(id: $id, name: $name, url: $url, width: $width, height: $height)';
   }
 
   @override
@@ -209,15 +182,12 @@ class _$_ImageModel extends _ImageModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.width, width) || other.width == width) &&
-            (identical(other.height, height) || other.height == height) &&
-            (identical(other.inpaintedUrl, inpaintedUrl) ||
-                other.inpaintedUrl == inpaintedUrl));
+            (identical(other.height, height) || other.height == height));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, url, width, height, inpaintedUrl);
+  int get hashCode => Object.hash(runtimeType, id, name, url, width, height);
 
   @JsonKey(ignore: true)
   @override
@@ -239,8 +209,7 @@ abstract class _ImageModel extends ImageModel {
       final String name,
       final String url,
       final int width,
-      final int height,
-      final String inpaintedUrl}) = _$_ImageModel;
+      final int height}) = _$_ImageModel;
   const _ImageModel._() : super._();
 
   factory _ImageModel.fromJson(Map<String, dynamic> json) =
@@ -256,8 +225,6 @@ abstract class _ImageModel extends ImageModel {
   int get width;
   @override
   int get height;
-  @override
-  String get inpaintedUrl;
   @override
   @JsonKey(ignore: true)
   _$$_ImageModelCopyWith<_$_ImageModel> get copyWith =>

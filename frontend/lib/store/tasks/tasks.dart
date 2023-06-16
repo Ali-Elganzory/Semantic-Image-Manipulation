@@ -52,6 +52,22 @@ class Tasks extends _$Tasks {
     _handleNewTask(TaskType.detection, taskFuture);
   }
 
+  Future<void> inpaint() async {
+    final imageId = ref.read(imagesProvider).selected.id;
+    final detectionIds = ref
+        .read(detectionsProvider)
+        .selectedDetections
+        .map((e) => e.id)
+        .toList();
+
+    final taskFuture = repository.inpaint(
+      imageId,
+      detectionIds,
+    );
+
+    _handleNewTask(TaskType.inpainting, taskFuture);
+  }
+
   Future<void> edit(String prompt) async {
     final imageId = ref.read(imagesProvider).selected.id;
 
@@ -172,6 +188,10 @@ class Tasks extends _$Tasks {
         ref.read(detectionsProvider.notifier).getDetections(task.id);
       } else if (task.type == TaskType.editing) {
         ref.read(modifiedImagesProvider.notifier).getEditingImages(task.id);
+      } else if (task.type == TaskType.inpainting) {
+        ref
+            .read(modifiedImagesProvider.notifier)
+            .getInpaintingTaskImage(task.id);
       }
     } else {
       _failed('${task.type.string} failed');
@@ -194,6 +214,18 @@ class Tasks extends _$Tasks {
 }
 
 @Riverpod(keepAlive: true)
+bool isInpaintingEnabled(IsInpaintingEnabledRef ref) {
+  final detections = ref.watch(detectionsProvider).detections;
+  return detections.isNotEmpty;
+}
+
+@Riverpod(keepAlive: true)
+bool readyToInpaint(ReadyToInpaintRef ref) {
+  final detections = ref.watch(detectionsProvider).selectedDetections;
+  return detections.isNotEmpty;
+}
+
+@Riverpod(keepAlive: true)
 bool isDetectionRunning(IsDetectionRunningRef ref) {
   final tasks = ref.watch(tasksProvider).tasks;
   return tasks.any((task) =>
@@ -201,7 +233,14 @@ bool isDetectionRunning(IsDetectionRunningRef ref) {
 }
 
 @Riverpod(keepAlive: true)
-bool isEditingRunning(IsDetectionRunningRef ref) {
+bool isInpaintingRunning(IsInpaintingRunningRef ref) {
+  final tasks = ref.watch(tasksProvider).tasks;
+  return tasks.any((task) =>
+      task.type == TaskType.inpainting && task.status == TaskStatus.running);
+}
+
+@Riverpod(keepAlive: true)
+bool isEditingRunning(IsEditingRunningRef ref) {
   final tasks = ref.watch(tasksProvider).tasks;
   return tasks.any((task) =>
       task.type == TaskType.editing && task.status == TaskStatus.running);

@@ -5,6 +5,7 @@ import '/third_party/third_party.dart';
 
 import 'edit_image_header.dart';
 import 'detection_body.dart';
+import 'inpainting_body.dart';
 import 'editing_body.dart';
 
 class EditImage extends HookConsumerWidget {
@@ -13,12 +14,12 @@ class EditImage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // State
-    final tabs = ref.watch(tabsProvider).tabs;
-    final selectedTab = ref.watch(tabsProvider).selectedTab;
+    final tabs = ref.watch(tabsProvider);
+    final selectedTab = ref.watch(selectedTabProvider);
 
     final body = {
       tabs[0]: const DetectionBody(),
-      tabs[1]: const Text('Inpainting'),
+      tabs[1]: const InpaintingBody(),
       tabs[2]: const EditingBody(),
     }[selectedTab]!;
 

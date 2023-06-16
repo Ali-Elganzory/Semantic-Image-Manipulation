@@ -14,8 +14,8 @@ class EditImageHeader extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // State
     final image = ref.watch(imagesProvider).selected;
-    final tabs = ref.watch(tabsProvider).tabs;
-    final selectedTab = ref.watch(tabsProvider).selectedTab;
+    final tabs = ref.watch(tabsProvider);
+    final selectedTab = ref.watch(selectedTabProvider);
     final tasks = ref.watch(tasksProvider).tasks;
     final areTasksLoading = ref.watch(tasksProvider).isLoading;
 

@@ -9,7 +9,7 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:flutter_dropzone/flutter_dropzone.dart';
 export 'package:dotted_border/dotted_border.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+export 'package:carousel_slider/carousel_slider.dart';
 export 'package:http_parser/http_parser.dart';
 export 'package:shimmer/shimmer.dart';
 export 'package:dartz/dartz.dart';

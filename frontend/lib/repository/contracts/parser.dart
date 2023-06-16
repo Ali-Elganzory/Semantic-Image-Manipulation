@@ -17,6 +17,7 @@ abstract class Parser {
     LabelModel: (json) => LabelModel.fromJson(json),
     TaskModel: (json) => TaskModel.fromJson(json),
     DetectionModel: (json) => DetectionModel.fromJson(json),
+    ModifiedImageModel: (json) => ModifiedImageModel.fromJson(json),
     VoidModel: (json) => VoidModel.fromJson(json),
   };
 

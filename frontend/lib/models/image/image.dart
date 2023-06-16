@@ -13,7 +13,6 @@ class ImageModel with _$ImageModel {
     @Default(Empty.STRING) String url,
     @Default(Empty.INT) int width,
     @Default(Empty.INT) int height,
-    @Default(Empty.STRING) String inpaintedUrl,
   }) = _ImageModel;
 
   const ImageModel._();

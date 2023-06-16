@@ -13,6 +13,11 @@ class ApiUrl {
   static const String detect = _detections;
   static const String getDetectionsByTask = '${_detections}task';
 
+  static const String _inpainting = 'inpainting/';
+  static const String inpaint = _inpainting;
+  static const String getInpaintByTask = '${_inpainting}task';
+  static const String getInpaintsByImage = '${_inpainting}image';
+
   static const String _editing = 'editing/';
   static const String edit = _editing;
   static const String getEditsByImage = '${_editing}image';

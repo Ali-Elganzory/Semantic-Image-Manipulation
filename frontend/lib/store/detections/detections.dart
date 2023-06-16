@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '/util/util.dart';
 import '/store/store.dart';
 import '/models/models.dart';
@@ -72,6 +70,15 @@ class Detections extends _$Detections {
 
   void searchLabels(String searchTerm) {
     state = state.copyWith(labelsSearchTerm: searchTerm);
+  }
+
+  void reset() {
+    state = state.copyWith(
+      selectedLabels: [],
+      labelsSearchTerm: Empty.STRING,
+      detections: [],
+      selectedDetections: {},
+    );
   }
 
   Future<void> getDetections(int taskId) async {

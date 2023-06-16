@@ -13,7 +13,6 @@ _$_ImageModel _$$_ImageModelFromJson(Map<String, dynamic> json) =>
       url: json['url'] as String? ?? Empty.STRING,
       width: json['width'] as int? ?? Empty.INT,
       height: json['height'] as int? ?? Empty.INT,
-      inpaintedUrl: json['inpainted_url'] as String? ?? Empty.STRING,
     );
 
 Map<String, dynamic> _$$_ImageModelToJson(_$_ImageModel instance) =>
@@ -23,5 +22,4 @@ Map<String, dynamic> _$$_ImageModelToJson(_$_ImageModel instance) =>
       'url': instance.url,
       'width': instance.width,
       'height': instance.height,
-      'inpainted_url': instance.inpaintedUrl,
     };

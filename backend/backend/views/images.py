@@ -78,13 +78,6 @@ def get_images():
                 ),
                 "width": image.width,
                 "height": image.height,
-                "inpainted_url": ""
-                if image.inpainted_path is None
-                else url_for(
-                    "images.download_image",
-                    image_filename=image.inpainted_path.split("/")[-1],
-                    _external=True,
-                ),
             }
             for image in images
         ],

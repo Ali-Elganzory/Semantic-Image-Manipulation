@@ -37,7 +37,7 @@ final relativeDetectionsProvider = Provider<List<DetectionModel>>.internal(
 );
 
 typedef RelativeDetectionsRef = ProviderRef<List<DetectionModel>>;
-String _$detectionsHash() => r'228939d38b2fd443b8199b065dc43a1d3cfe8048';
+String _$detectionsHash() => r'6056c7494199f623bfcceab1a83e7d2a69bb0373';
 
 /// See also [Detections].
 @ProviderFor(Detections)
