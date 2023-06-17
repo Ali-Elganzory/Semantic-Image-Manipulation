@@ -84,12 +84,14 @@ class ApiRepository {
   RepositoryResponse<TaskModel> inpaint(
     int imageId,
     List<int> detectionIds,
+    bool extremeMode,
   ) {
     return _apiHttpClient.post<TaskModel, TaskModel>(
       path: ApiUrl.inpaint,
       payload: {
         'image_id': imageId,
         'detection_ids': detectionIds,
+        'extreme_mode': extremeMode,
       },
     );
   }

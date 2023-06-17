@@ -38,7 +38,7 @@ final readyToInpaintProvider = Provider<bool>.internal(
 
 typedef ReadyToInpaintRef = ProviderRef<bool>;
 String _$isDetectionRunningHash() =>
-    r'f5e019caee38280593b91dbd6e14ad4b7e4973bb';
+    r'59c5291f0a53843a1b570b0fecc977fea911370d';
 
 /// See also [isDetectionRunning].
 @ProviderFor(isDetectionRunning)
@@ -54,7 +54,7 @@ final isDetectionRunningProvider = Provider<bool>.internal(
 
 typedef IsDetectionRunningRef = ProviderRef<bool>;
 String _$isInpaintingRunningHash() =>
-    r'b949d1129a8d5ffac819a303569b6faa9b71e867';
+    r'99d0c7e9c7751a918680963b049b458e98ccb71d';
 
 /// See also [isInpaintingRunning].
 @ProviderFor(isInpaintingRunning)
@@ -69,7 +69,7 @@ final isInpaintingRunningProvider = Provider<bool>.internal(
 );
 
 typedef IsInpaintingRunningRef = ProviderRef<bool>;
-String _$isEditingRunningHash() => r'3de71369186b703fe7e9941c3bfdc3940cf35e1f';
+String _$isEditingRunningHash() => r'7efa301bbb1ae9f2516226d58fcbd60339d8bc8e';
 
 /// See also [isEditingRunning].
 @ProviderFor(isEditingRunning)

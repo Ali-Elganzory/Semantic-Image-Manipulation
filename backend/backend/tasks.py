@@ -53,6 +53,7 @@ def inpaint(
     self: FlaskTask,
     task_id: int,
     detection_ids: List[int],
+    extreme_mode: bool,
 ) -> None:
     task = Task().get(task_id)
 
@@ -63,8 +64,10 @@ def inpaint(
         if image is None:
             raise HandlerException()
 
-        image_file = cv2.imread(image.path)
-        if image_file is None:
+        input_image_path = image.path
+
+        input_image_file = cv2.imread(input_image_path)
+        if input_image_file is None:
             raise HandlerException()
 
         # Create bounding boxes
@@ -82,8 +85,44 @@ def inpaint(
             detections,
         )
 
+        # If extreme mode, downsample input image
+        min_resolution = (256, 256)
+        downsampled_resolution = (
+            max(input_image_file.shape[1] // 2, min_resolution[1]),
+            max(input_image_file.shape[0] // 2, min_resolution[0]),
+        )
+        original_resolution = (input_image_file.shape[1], input_image_file.shape[0])
+        if extreme_mode and original_resolution > downsampled_resolution:
+            input_image_file = cv2.resize(
+                input_image_file,
+                downsampled_resolution,
+            )
+            cv2.imwrite(
+                input_image_path.split(".")[0] + "_tmp.jpg",
+                input_image_file,
+            )
+            input_image_path = input_image_path.split(".")[0] + "_tmp.jpg"
+
+            # Resize bounding boxes
+            ratio = (
+                downsampled_resolution[0] / original_resolution[0],
+                downsampled_resolution[1] / original_resolution[1],
+            )
+            bboxs = map(
+                lambda bbox: BBox(
+                    int(bbox.x1 * ratio[0]),
+                    int(bbox.y1 * ratio[1]),
+                    int(bbox.x2 * ratio[0]),
+                    int(bbox.y2 * ratio[1]),
+                    bbox.confidence,
+                    bbox.label_id,
+                    bbox.label,
+                ),
+                bboxs,
+            )
+
         # Generate mask
-        mask = self.mask_generator.generate(image_file, bboxs)
+        mask = self.mask_generator.generate(input_image_file, bboxs)
         mask_path = self.generate_mask_path("jpg")
         cv2.imwrite(mask_path, mask)
 
@@ -91,7 +130,16 @@ def inpaint(
         output_image_path = self.generate_modified_path("jpg")
 
         # Inpaint
-        self.inpainting_model.inpaint(image.path, mask_path, output_image_path)
+        self.inpainting_model.inpaint(input_image_path, mask_path, output_image_path)
+
+        # If extreme mode, upsample output image
+        if extreme_mode and original_resolution > downsampled_resolution:
+            output_image_file = cv2.imread(output_image_path)
+            output_image_file = cv2.resize(
+                output_image_file,
+                original_resolution,
+            )
+            cv2.imwrite(output_image_path, output_image_file)
 
         # Save modified image
         ModifiedImage(

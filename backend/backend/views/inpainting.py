@@ -10,6 +10,7 @@ bp = Blueprint("inpainting", __name__, url_prefix="/inpainting")
 def inpaint():
     image_id = request.json["image_id"]
     detection_ids = request.json["detection_ids"]
+    extreme_mode = request.json["extreme_mode"]
 
     task = Task(
         image_id=image_id,
@@ -21,6 +22,7 @@ def inpaint():
     inpainting_task.delay(
         task.id,
         detection_ids,
+        extreme_mode if extreme_mode is not None else False,
     )
 
     return {

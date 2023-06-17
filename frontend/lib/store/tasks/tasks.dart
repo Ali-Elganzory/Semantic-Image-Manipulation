@@ -10,6 +10,11 @@ import '/third_party/third_party.dart';
 part 'tasks.freezed.dart';
 part 'tasks.g.dart';
 
+const List<TaskStatus> _unfinishedStatuses = [
+  TaskStatus.pending,
+  TaskStatus.running,
+];
+
 @freezed
 class TasksState with _$TasksState {
   const TasksState._();
@@ -52,7 +57,7 @@ class Tasks extends _$Tasks {
     _handleNewTask(TaskType.detection, taskFuture);
   }
 
-  Future<void> inpaint() async {
+  Future<void> inpaint(bool extremeMode) async {
     final imageId = ref.read(imagesProvider).selected.id;
     final detectionIds = ref
         .read(detectionsProvider)
@@ -63,6 +68,7 @@ class Tasks extends _$Tasks {
     final taskFuture = repository.inpaint(
       imageId,
       detectionIds,
+      extremeMode,
     );
 
     _handleNewTask(TaskType.inpainting, taskFuture);
@@ -228,20 +234,29 @@ bool readyToInpaint(ReadyToInpaintRef ref) {
 @Riverpod(keepAlive: true)
 bool isDetectionRunning(IsDetectionRunningRef ref) {
   final tasks = ref.watch(tasksProvider).tasks;
-  return tasks.any((task) =>
-      task.type == TaskType.detection && task.status == TaskStatus.running);
+  return tasks.any(
+    (task) =>
+        task.type == TaskType.detection &&
+        _unfinishedStatuses.contains(task.status),
+  );
 }
 
 @Riverpod(keepAlive: true)
 bool isInpaintingRunning(IsInpaintingRunningRef ref) {
   final tasks = ref.watch(tasksProvider).tasks;
-  return tasks.any((task) =>
-      task.type == TaskType.inpainting && task.status == TaskStatus.running);
+  return tasks.any(
+    (task) =>
+        task.type == TaskType.inpainting &&
+        _unfinishedStatuses.contains(task.status),
+  );
 }
 
 @Riverpod(keepAlive: true)
 bool isEditingRunning(IsEditingRunningRef ref) {
   final tasks = ref.watch(tasksProvider).tasks;
-  return tasks.any((task) =>
-      task.type == TaskType.editing && task.status == TaskStatus.running);
+  return tasks.any(
+    (task) =>
+        task.type == TaskType.editing &&
+        _unfinishedStatuses.contains(task.status),
+  );
 }

@@ -10,6 +10,7 @@ export 'package:flutter_dropzone/flutter_dropzone.dart';
 export 'package:dotted_border/dotted_border.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:carousel_slider/carousel_slider.dart';
+export 'package:file_saver/file_saver.dart';
 export 'package:http_parser/http_parser.dart';
 export 'package:shimmer/shimmer.dart';
 export 'package:dartz/dartz.dart';

@@ -5,6 +5,7 @@
 
 # Init database (this erases the db, and updates the schema)
 # flask --app backend init-db
+# rm -r instance/*
 
 # Update labels in database
 flask --app backend update-labels
