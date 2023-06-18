@@ -4,7 +4,7 @@ from PIL import Image as PILImage
 import cv2
 
 from backend.celery_app import FlaskTask
-from backend.ml.yolo.YOLO import BBox
+from backend.ml.ObjectDetector.ObjectDetector import BBox
 from backend.models import Detection, Image, Task, TaskStatus, Prompt, ModifiedImage
 
 

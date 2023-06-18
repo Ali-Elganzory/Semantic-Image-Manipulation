@@ -2,7 +2,7 @@ from typing import Iterable
 import cv2 as cv
 import numpy as np
 
-from backend.ml.yolo.YOLO import BBox
+from backend.ml.ObjectDetector.ObjectDetector import BBox
 
 
 class MaskGenerator:

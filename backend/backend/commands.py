@@ -6,7 +6,7 @@ from flask.cli import with_appcontext
 from backend.database import db_session
 
 
-@click.command('update-labels')
+@click.command("update-labels")
 @with_appcontext
 def update_labels():
     """
@@ -18,7 +18,7 @@ def update_labels():
     from backend.models import Label
 
     labels = None
-    with open(current_app.root_path + '/ml/yolo/labels.json') as f:
+    with open(current_app.root_path + "/ml/ObjectDetector/labels.json") as f:
         labels = json.load(f)
         labels = [Label(id=index, name=labels[index]) for index in labels]
 
@@ -26,8 +26,7 @@ def update_labels():
     db_session.add_all(labels)
     db_session.commit()
 
-    click.echo(
-        f"Updated the detection labels in database: {len(labels)} Labels.")
+    click.echo(f"Updated the detection labels in database: {len(labels)} Labels.")
 
 
 def init_app(app: Flask):

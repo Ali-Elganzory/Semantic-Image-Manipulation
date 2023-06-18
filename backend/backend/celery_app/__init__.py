@@ -24,9 +24,9 @@ def init_app(app: Flask) -> Celery:
         def __call__(self, *args: object, **kwargs: object) -> object:
             # Initialize detection model only once
             if self.detection_model is None:
-                from backend.ml.yolo.YOLO import YOLO
+                from backend.ml.ObjectDetector.ObjectDetector import ObjectDetector
 
-                self.detection_model = YOLO()
+                self.detection_model = ObjectDetector()
 
             # Initialize edit model only once
             if self.editing_model is None:

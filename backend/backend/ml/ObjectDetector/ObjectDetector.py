@@ -17,7 +17,7 @@ class BBox:
     y1: int
     x2: int
     y2: int
-    confidence: int
+    confidence: float
     label_id: int
     label: str
 
@@ -62,7 +62,7 @@ class BBox:
         )
 
 
-class YOLO:
+class ObjectDetector:
     def __init__(self, model_size: str = ModelSize.XLarge):
         self.model_size = model_size
         self.path = Path(__file__).parent

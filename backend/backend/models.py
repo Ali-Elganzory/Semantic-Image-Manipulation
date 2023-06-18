@@ -42,7 +42,9 @@ class CrudMixin:
         db_session.delete(self)
         db_session.commit()
 
-    def all(self, ids: List[int]) -> List[Self]:
+    def all(self, ids: List[int] = None) -> List[Self]:
+        if ids is None:
+            return db_session.query(self.__class__).all()
         return db_session.query(self.__class__).filter(self.__class__.id.in_(ids)).all()
 
     def asdict(self) -> dict:
