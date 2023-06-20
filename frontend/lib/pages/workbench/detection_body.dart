@@ -61,6 +61,13 @@ class _DetectionBodyState extends ConsumerState<DetectionBody> {
           right: 0,
           child: Skeleton(
             isLoading: areLabelsLoading,
+            placeholder: Container(
+              height: _inputHeight,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
             child: ChipsInput<LabelModel>(
               decoration: InputDecoration(
                 hintText: 'What do you want to remove?',

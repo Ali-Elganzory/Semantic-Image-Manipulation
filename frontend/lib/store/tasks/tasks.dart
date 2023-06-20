@@ -42,7 +42,7 @@ class Tasks extends _$Tasks {
     TaskStatus.running,
   ];
 
-  static const _pollingInterval = Duration(seconds: 1);
+  static const _pollingInterval = Duration(seconds: 2);
 
   Future<void> detect() async {
     final imageId = ref.read(imagesProvider).selected.id;
@@ -102,7 +102,9 @@ class Tasks extends _$Tasks {
       tasks: [
         ...state.tasks.where((e) => e.type != type),
         task,
-      ],
+      ]..sort(
+          (a, b) => b.type.string.compareTo(a.type.string),
+        ),
     );
 
     // Send request
@@ -119,7 +121,9 @@ class Tasks extends _$Tasks {
           tasks: [
             ...state.tasks.where((t) => t.id != task.id),
             successfulResponse.data,
-          ],
+          ]..sort(
+              (a, b) => b.type.string.compareTo(a.type.string),
+            ),
         );
         _pollTask(successfulResponse.data.id);
       },
@@ -142,7 +146,9 @@ class Tasks extends _$Tasks {
       (successfulResponse) {
         state = state.copyWith(
           isLoading: false,
-          tasks: [...successfulResponse.data],
+          tasks: [...successfulResponse.data]..sort(
+              (a, b) => b.type.string.compareTo(a.type.string),
+            ),
         );
 
         for (final task in successfulResponse.data) {
@@ -172,7 +178,9 @@ class Tasks extends _$Tasks {
           tasks: [
             ...state.tasks.where((t) => t.id != task.id),
             task,
-          ],
+          ]..sort(
+              (a, b) => b.type.string.compareTo(a.type.string),
+            ),
         );
 
         // Stop polling if task is finished

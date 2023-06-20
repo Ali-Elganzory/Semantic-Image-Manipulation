@@ -93,12 +93,12 @@ class Images extends _$Images {
         final newImage = successfulResponse.data;
         state = state.copyWith(
           isUploadingImage: false,
-          selected: newImage,
           images: [
             newImage,
             ...state.images,
           ],
         );
+        select(newImage);
       },
     );
   }

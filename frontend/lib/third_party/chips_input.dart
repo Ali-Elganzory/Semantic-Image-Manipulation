@@ -123,7 +123,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>> with TextInputClient {
 
   @override
   void dispose() {
-    _focusNode?.dispose();
+    // _focusNode?.dispose();
     _closeInputConnectionIfNeeded();
     super.dispose();
   }
